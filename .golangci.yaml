@@ -27,3 +27,4 @@ linters:
     - nestif
     - forbidigo
     - gochecknoglobals
+    - nosnakecase
