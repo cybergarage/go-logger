@@ -1,3 +1,7 @@
+2022-08-02 The go-logger Authors <skonno@cybergarage.org>
+	* v1.1.0
+        * Add Debug()
+
 2022-07-28 The go-logger Authors <skonno@cybergarage.org>
 	* v1.0.0
-        * The first release.
+        * The first release
