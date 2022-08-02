@@ -1,4 +1,4 @@
-// Copyright (C) 2018 The go-logger Authors All rights reserved.
+// Copyright (C) 2018 The go-logger Authors. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -55,10 +55,15 @@ func TestNullLogger(t *testing.T) {
 }
 
 func TestStdoutLogger(t *testing.T) {
-	SetSharedLogger(NewStdoutLogger(LevelTrace))
+	SetSharedLogger(NewStdoutLogger(LevelDebug))
 	defer SetSharedLogger(nil)
 
-	nOutput := Trace(testLogMessage)
+	nOutput := Debug(testLogMessage)
+	if nOutput <= 0 {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = Trace(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}

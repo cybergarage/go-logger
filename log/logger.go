@@ -1,4 +1,4 @@
-// Copyright (C) 2018 The go-logger Authors All rights reserved.
+// Copyright (C) 2018 The go-logger Authors. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,15 +32,16 @@ type Logger struct {
 }
 
 const (
-	Format     = "%s %s %s"
-	LF         = "\n"
-	FilePerm   = 0644
-	LevelTrace = (1 << 5)
-	LevelInfo  = (1 << 4)
-	LevelWarn  = (1 << 3)
-	LevelError = (1 << 2)
-	LevelFatal = (1 << 1)
-	LevelNone  = 0
+	logFormat   = "%s %s %s"
+	logFilePerm = 0644
+	LF          = "\n"
+	LevelDebug  = (1 << 6)
+	LevelTrace  = (1 << 5)
+	LevelInfo   = (1 << 4)
+	LevelWarn   = (1 << 3)
+	LevelError  = (1 << 2)
+	LevelFatal  = (1 << 1)
+	LevelAll    = 0
 
 	loggerLevelUnknownString = "UNKNOWN"
 	loggerStdout             = "stdout"
@@ -48,15 +49,18 @@ const (
 
 var sharedLogger *Logger
 
+// SetSharedLogger sets a singleton logger.
 func SetSharedLogger(logger *Logger) {
 	sharedLogger = logger
 }
 
+// GetSharedLogger gets a shared singleton logger.
 func GetSharedLogger() *Logger {
 	return sharedLogger
 }
 
 var logLevelStrings = map[Level]string{
+	LevelDebug: "DEBUG",
 	LevelTrace: "TRACE",
 	LevelInfo:  "INFO",
 	LevelWarn:  "WARN",
@@ -72,14 +76,22 @@ func getLevelString(logLevel Level) string {
 	return logString
 }
 
+// SetLevel sets a output log level.
 func (logger *Logger) SetLevel(level Level) {
 	logger.Level = level
 }
 
+// GetLevel gets the current log level.
 func (logger *Logger) GetLevel() Level {
 	return logger.Level
 }
 
+// IsLevel returns true when the specified log level is enable, otherwise false.
+func (logger *Logger) IsLevel(logLevel Level) bool {
+	return logLevel >= logger.Level
+}
+
+// NewStdoutLogger creates a stdout logger.
 func NewStdoutLogger(level Level) *Logger {
 	logger := &Logger{
 		File:     loggerStdout,
@@ -93,6 +105,7 @@ func outputStdout(file string, level Level, msg string) (int, error) {
 	return len(msg), nil
 }
 
+// NewFileLogger creates a file based logger.
 func NewFileLogger(file string, level Level) *Logger {
 	logger := &Logger{
 		File:     file,
@@ -103,7 +116,7 @@ func NewFileLogger(file string, level Level) *Logger {
 
 func outputToFile(file string, level Level, msg string) (int, error) {
 	msgBytes := []byte(msg + LF)
-	fd, err := os.OpenFile(file, (os.O_WRONLY | os.O_CREATE | os.O_APPEND), FilePerm)
+	fd, err := os.OpenFile(file, (os.O_WRONLY | os.O_CREATE | os.O_APPEND), logFilePerm)
 	if err != nil {
 		return 0, err
 	}
@@ -123,7 +136,7 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 	}
 
 	logLevel := sharedLogger.GetLevel()
-	if (logLevel < outputLevel) || (logLevel <= LevelFatal) || (LevelTrace < logLevel) {
+	if logLevel < outputLevel {
 		return 0
 	}
 
@@ -133,7 +146,7 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 		t.Hour(), t.Minute(), t.Second())
 
 	headerString := fmt.Sprintf("[%s]", getLevelString(outputLevel))
-	logMsg := fmt.Sprintf(Format, logDate, headerString, fmt.Sprintf(msgFormat, msgArgs...))
+	logMsg := fmt.Sprintf(logFormat, logDate, headerString, fmt.Sprintf(msgFormat, msgArgs...))
 	logMsgLen := len(logMsg)
 
 	if 0 < logMsgLen {
@@ -143,26 +156,37 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 	return logMsgLen
 }
 
+// Debug outputs a debug level message to loggers.
+func Debug(format string, args ...interface{}) int {
+	return output(LevelDebug, format, args...)
+}
+
+// Trace outputs trace level message to loggers.
 func Trace(format string, args ...interface{}) int {
 	return output(LevelTrace, format, args...)
 }
 
+// Info outputs a information level message to loggers.
 func Info(format string, args ...interface{}) int {
 	return output(LevelInfo, format, args...)
 }
 
+// Warn outputs a warning level message to loggers.
 func Warn(format string, args ...interface{}) int {
 	return output(LevelWarn, format, args...)
 }
 
+// Error outputs a error level message to loggers.
 func Error(format string, args ...interface{}) int {
 	return output(LevelError, format, args...)
 }
 
+// Fatal outputs a fatal level message to loggers.
 func Fatal(format string, args ...interface{}) int {
 	return output(LevelFatal, format, args...)
 }
 
+// Output outputs the specified level message to loggers.
 func Output(outputLevel Level, format string, args ...interface{}) int {
 	return output(outputLevel, format, args...)
 }
