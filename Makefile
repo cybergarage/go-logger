@@ -24,9 +24,11 @@ PKG_NAME=log
 PKG_ID=${MODULE_ROOT}/${PKG_NAME}
 PKG_SRC_DIR=${PKG_NAME}
 PKG_SRCS=\
-        ${PKG_SRC_DIR}
+        ${PKG_SRC_DIR} \
+        ${PKG_SRC_DIR}/hexdump
 PKGS=\
-	${PKG_ID}
+	${PKG_ID} \
+	${PKG_ID}/hexdump
 
 .PHONY: format vet lint clean
 
