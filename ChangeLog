@@ -1,3 +1,7 @@
+2022-08-13 The go-logger Authors <skonno@cybergarage.org>
+	* v1.2.0
+        * Add Hex*() to dump binary protocol bytes
+
 2022-08-02 The go-logger Authors <skonno@cybergarage.org>
 	* v1.1.0
         * Add Debug()
