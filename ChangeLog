@@ -1,3 +1,8 @@
+2022-09-05 The go-logger Authors <skonno@cybergarage.org>
+	* v1.3.0
+        * Rename log.*() to log.*f()
+        * Add Error()
+
 2022-08-13 The go-logger Authors <skonno@cybergarage.org>
 	* v1.2.0
         * Add Hex*() to dump binary protocol bytes
