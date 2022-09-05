@@ -28,27 +28,27 @@ const (
 func TestNullLogger(t *testing.T) {
 	SetSharedLogger(nil)
 
-	nOutput := Trace(testLogMessage)
+	nOutput := Tracef(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
-	nOutput = Info(testLogMessage)
+	nOutput = Infof(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
-	nOutput = Error(testLogMessage)
+	nOutput = Errorf(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
-	nOutput = Warn(testLogMessage)
+	nOutput = Warnf(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
-	nOutput = Fatal(testLogMessage)
+	nOutput = Fatalf(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
@@ -58,32 +58,32 @@ func TestStdoutLogger(t *testing.T) {
 	SetSharedLogger(NewStdoutLogger(LevelDebug))
 	defer SetSharedLogger(nil)
 
-	nOutput := Debug(testLogMessage)
+	nOutput := Debugf(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Trace(testLogMessage)
+	nOutput = Tracef(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Info(testLogMessage)
+	nOutput = Infof(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Error(testLogMessage)
+	nOutput = Errorf(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Warn(testLogMessage)
+	nOutput = Warnf(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Fatal(testLogMessage)
+	nOutput = Fatalf(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
