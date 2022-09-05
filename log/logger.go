@@ -190,3 +190,8 @@ func Fatalf(format string, args ...interface{}) int {
 func Outputf(outputLevel Level, format string, args ...interface{}) int {
 	return output(outputLevel, format, args...)
 }
+
+// Error outputs a error level message to loggers.
+func Error(err error) int {
+	return Errorf("%s", err.Error())
+}
