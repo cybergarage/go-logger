@@ -5,4 +5,3 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/cybergarage/go-logger.svg)](https://pkg.go.dev/github.com/cybergarage/go-logger)
 
 `go-logger` is a simple common package for CyberGarage's go-lang projects.
-
