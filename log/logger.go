@@ -156,37 +156,37 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 	return logMsgLen
 }
 
-// Debug outputs a debug level message to loggers.
-func Debug(format string, args ...interface{}) int {
+// Debugf outputs a debug level message to loggers.
+func Debugf(format string, args ...interface{}) int {
 	return output(LevelDebug, format, args...)
 }
 
-// Trace outputs trace level message to loggers.
-func Trace(format string, args ...interface{}) int {
+// Tracef outputs trace level message to loggers.
+func Tracef(format string, args ...interface{}) int {
 	return output(LevelTrace, format, args...)
 }
 
-// Info outputs a information level message to loggers.
-func Info(format string, args ...interface{}) int {
+// Infof outputs a information level message to loggers.
+func Infof(format string, args ...interface{}) int {
 	return output(LevelInfo, format, args...)
 }
 
-// Warn outputs a warning level message to loggers.
-func Warn(format string, args ...interface{}) int {
+// Warnf outputs a warning level message to loggers.
+func Warnf(format string, args ...interface{}) int {
 	return output(LevelWarn, format, args...)
 }
 
-// Error outputs a error level message to loggers.
-func Error(format string, args ...interface{}) int {
+// Errorf outputs a error level message to loggers.
+func Errorf(format string, args ...interface{}) int {
 	return output(LevelError, format, args...)
 }
 
-// Fatal outputs a fatal level message to loggers.
-func Fatal(format string, args ...interface{}) int {
+// Fatalf outputs a fatal level message to loggers.
+func Fatalf(format string, args ...interface{}) int {
 	return output(LevelFatal, format, args...)
 }
 
-// Output outputs the specified level message to loggers.
-func Output(outputLevel Level, format string, args ...interface{}) int {
+// Outputf outputs the specified level message to loggers.
+func Outputf(outputLevel Level, format string, args ...interface{}) int {
 	return output(outputLevel, format, args...)
 }
