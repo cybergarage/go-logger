@@ -18,6 +18,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -48,6 +49,7 @@ const (
 )
 
 var sharedLogger *Logger
+var sharedLoggerMutex = &sync.Mutex{}
 
 // SetSharedLogger sets a singleton logger.
 func SetSharedLogger(logger *Logger) {
@@ -139,6 +141,9 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 	if logLevel < outputLevel {
 		return 0
 	}
+
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
 
 	t := time.Now()
 	logDate := fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d",
