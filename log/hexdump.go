@@ -50,6 +50,9 @@ func HexFatal(bytes []byte) int {
 
 // Output outputs the specified level message to loggers.
 func HexOutput(outputLevel Level, bytes []byte) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+
 	nOutput := 0
 	lines := hexdump.EncodeToStrings(bytes)
 	for _, line := range lines {
