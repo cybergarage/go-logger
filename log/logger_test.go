@@ -52,6 +52,43 @@ func TestNullLogger(t *testing.T) {
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
+
+	nOutput = Error(errors.New(testLogMessage))
+	if 0 < nOutput {
+		t.Error(errors.New(nullOutputErrorMessage))
+	}
+
+	// Hex*()
+
+	nOutput = HexDebug([]byte(testLogMessage))
+	if 0 < nOutput {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexTrace([]byte(testLogMessage))
+	if 0 < nOutput {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexInfo([]byte(testLogMessage))
+	if 0 < nOutput {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexError([]byte(testLogMessage))
+	if 0 < nOutput {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexWarn([]byte(testLogMessage))
+	if 0 < nOutput {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexFatal([]byte(testLogMessage))
+	if 0 < nOutput {
+		t.Error(errors.New(outputErrorMessage))
+	}
 }
 
 func TestStdoutLogger(t *testing.T) {
@@ -84,6 +121,43 @@ func TestStdoutLogger(t *testing.T) {
 	}
 
 	nOutput = Fatalf(testLogMessage)
+	if nOutput <= 0 {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = Error(errors.New(testLogMessage))
+	if nOutput <= 0 {
+		t.Error(errors.New(nullOutputErrorMessage))
+	}
+
+	// Hex*()
+
+	nOutput = HexDebug([]byte(testLogMessage))
+	if nOutput <= 0 {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexTrace([]byte(testLogMessage))
+	if nOutput <= 0 {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexInfo([]byte(testLogMessage))
+	if nOutput <= 0 {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexError([]byte(testLogMessage))
+	if nOutput <= 0 {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexWarn([]byte(testLogMessage))
+	if nOutput <= 0 {
+		t.Error(errors.New(outputErrorMessage))
+	}
+
+	nOutput = HexFatal([]byte(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
