@@ -216,8 +216,5 @@ func Outputf(outputLevel Level, format string, args ...interface{}) int {
 
 // Error outputs a error level message to loggers.
 func Error(err error) int {
-	sharedLoggerMutex.Lock()
-	defer sharedLoggerMutex.Unlock()
-
 	return Errorf("%s", err.Error())
 }
