@@ -1,6 +1,10 @@
 2023-02-23 The go-logger Authors <skonno@cybergarage.org>
-	* v1.3.1
+	* v1.3.2
 	* Upgrade to go 1.20
+
+2022-10-10 The go-logger Authors <skonno@cybergarage.org>
+	* v1.3.1
+	* Update outputter to use a mutex lock
 
 2022-09-05 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.0
