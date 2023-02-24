@@ -1,3 +1,7 @@
+2023-02-23 The go-logger Authors <skonno@cybergarage.org>
+	* v1.3.1
+	* Upgrade to go 1.20
+
 2022-09-05 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.0
         * Rename log.*() to log.*f()
