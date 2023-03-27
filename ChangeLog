@@ -1,3 +1,7 @@
+2023-03-28 The go-logger Authors <skonno@cybergarage.org>
+	* v1.3.3
+	* Update log level constants
+
 2023-02-23 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.2
 	* Upgrade to go 1.20
@@ -8,17 +12,17 @@
 
 2022-09-05 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.0
-        * Rename log.*() to log.*f()
-        * Add Error()
+    * Rename log.*() to log.*f()
+    * Add Error()
 
 2022-08-13 The go-logger Authors <skonno@cybergarage.org>
 	* v1.2.0
-        * Add Hex*() to dump binary protocol bytes
+    * Add Hex*() to dump binary protocol bytes
 
 2022-08-02 The go-logger Authors <skonno@cybergarage.org>
 	* v1.1.0
-        * Add Debug()
+    * Add Debug()
 
 2022-07-28 The go-logger Authors <skonno@cybergarage.org>
 	* v1.0.0
-        * The first release
+    * The first release
