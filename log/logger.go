@@ -33,17 +33,19 @@ type Logger struct {
 }
 
 const (
-	logFormat   = "%s %s %s"
-	logFilePerm = 0644
-	LF          = "\n"
-	LevelDebug  = (1 << 6)
-	LevelTrace  = (1 << 5)
-	LevelInfo   = (1 << 4)
-	LevelWarn   = (1 << 3)
-	LevelError  = (1 << 2)
-	LevelFatal  = (1 << 1)
-	LevelAll    = 0
+	LevelDebug = Level(1 << 6)
+	LevelTrace = Level(1 << 5)
+	LevelInfo  = Level(1 << 4)
+	LevelWarn  = Level(1 << 3)
+	LevelError = Level(1 << 2)
+	LevelFatal = Level(1 << 1)
+	LevelAll   = Level(0)
+)
 
+const (
+	logFormat                = "%s %s %s"
+	logFilePerm              = 0644
+	LF                       = "\n"
 	loggerLevelUnknownString = "UNKNOWN"
 	loggerStdout             = "stdout"
 )
