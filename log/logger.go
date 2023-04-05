@@ -18,6 +18,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 	"sync"
 	"time"
 )
@@ -151,13 +152,16 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 
 	headerString := fmt.Sprintf("[%s]", getLevelString(outputLevel))
 	logMsg := fmt.Sprintf(logFormat, logDate, headerString, fmt.Sprintf(msgFormat, msgArgs...))
-	logMsgLen := len(logMsg)
 
-	if 0 < logMsgLen {
-		logMsgLen, _ = sharedLogger.outputer(sharedLogger.File, logLevel, logMsg)
+	outMsgLen := 0
+	if 0 < len(logMsg) {
+		for _, lineMsg := range strings.Split(logMsg, "\n") {
+			n, _ := sharedLogger.outputer(sharedLogger.File, logLevel, lineMsg)
+			outMsgLen += n
+		}
 	}
 
-	return logMsgLen
+	return outMsgLen
 }
 
 // Debugf outputs a debug level message to loggers.
