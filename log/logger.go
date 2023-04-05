@@ -151,11 +151,12 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 		t.Hour(), t.Minute(), t.Second())
 
 	headerString := fmt.Sprintf("[%s]", getLevelString(outputLevel))
-	logMsg := fmt.Sprintf(logFormat, logDate, headerString, fmt.Sprintf(msgFormat, msgArgs...))
+	logMsg := fmt.Sprintf(msgFormat, msgArgs...)
 
 	outMsgLen := 0
 	if 0 < len(logMsg) {
 		for _, lineMsg := range strings.Split(logMsg, "\n") {
+			lineMsg := fmt.Sprintf(logFormat, logDate, headerString, lineMsg)
 			n, _ := sharedLogger.outputer(sharedLogger.File, logLevel, lineMsg)
 			outMsgLen += n
 		}
