@@ -3,6 +3,10 @@
 	* Update by golang.org/x/exp/slog
 	* Update outputer to split by line fields
 
+2023-05-04 The go-logger Authors <skonno@cybergarage.org>
+	* v1.3.4
+	* Add GetLevelFromString()
+
 2023-03-28 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.3
 	* Update log level constants
