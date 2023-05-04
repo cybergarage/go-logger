@@ -38,7 +38,7 @@ type LoggerOutpter func(file string, level Level, msg string) (int, error)
 
 type Logger struct {
 	File     string
-	Level    Level
+	level    Level
 	outputer LoggerOutpter
 }
 
@@ -54,24 +54,24 @@ func GetSharedLogger() *Logger {
 
 // SetLevel sets a output log level.
 func (logger *Logger) SetLevel(level Level) {
-	logger.Level = level
+	logger.level = level
 }
 
-// GetLevel gets the current log level.
-func (logger *Logger) GetLevel() Level {
-	return logger.Level
+// Level gets the current log level.
+func (logger *Logger) Level() Level {
+	return logger.level
 }
 
 // IsLevel returns true when the specified log level is enable, otherwise false.
 func (logger *Logger) IsLevel(logLevel Level) bool {
-	return logLevel >= logger.Level
+	return logLevel >= logger.level
 }
 
 // NewStdoutLogger creates a stdout logger.
 func NewStdoutLogger(level Level) *Logger {
 	logger := &Logger{
 		File:     loggerStdout,
-		Level:    level,
+		level:    level,
 		outputer: outputStdout}
 	return logger
 }
@@ -85,7 +85,7 @@ func outputStdout(_ string, _ Level, msg string) (int, error) {
 func NewFileLogger(file string, level Level) *Logger {
 	logger := &Logger{
 		File:     file,
-		Level:    level,
+		level:    level,
 		outputer: outputToFile}
 	return logger
 }
@@ -111,7 +111,7 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 		return 0
 	}
 
-	logLevel := sharedLogger.GetLevel()
+	logLevel := sharedLogger.Level()
 	if logLevel < outputLevel {
 		return 0
 	}
