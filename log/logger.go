@@ -76,7 +76,7 @@ func NewStdoutLogger(level Level) *Logger {
 	return logger
 }
 
-func outputStdout(file string, level Level, msg string) (int, error) {
+func outputStdout(_ string, _ Level, msg string) (int, error) {
 	fmt.Println(msg)
 	return len(msg), nil
 }
@@ -90,7 +90,7 @@ func NewFileLogger(file string, level Level) *Logger {
 	return logger
 }
 
-func outputToFile(file string, level Level, msg string) (int, error) {
+func outputToFile(file string, _ Level, msg string) (int, error) {
 	msgBytes := []byte(msg + LF)
 	fd, err := os.OpenFile(file, (os.O_WRONLY | os.O_CREATE | os.O_APPEND), logFilePerm)
 	if err != nil {
