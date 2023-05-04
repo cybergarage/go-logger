@@ -23,26 +23,6 @@ import (
 	"time"
 )
 
-type LoggerOutpter func(file string, level Level, msg string) (int, error)
-
-type Level int
-
-type Logger struct {
-	File     string
-	Level    Level
-	outputer LoggerOutpter
-}
-
-const (
-	LevelDebug = Level(1 << 6)
-	LevelTrace = Level(1 << 5)
-	LevelInfo  = Level(1 << 4)
-	LevelWarn  = Level(1 << 3)
-	LevelError = Level(1 << 2)
-	LevelFatal = Level(1 << 1)
-	LevelAll   = Level(0)
-)
-
 const (
 	logFormat                = "%s %s %s"
 	logFilePerm              = 0644
@@ -54,6 +34,14 @@ const (
 var sharedLogger *Logger
 var sharedLoggerMutex = &sync.Mutex{}
 
+type LoggerOutpter func(file string, level Level, msg string) (int, error)
+
+type Logger struct {
+	File     string
+	Level    Level
+	outputer LoggerOutpter
+}
+
 // SetSharedLogger sets a singleton logger.
 func SetSharedLogger(logger *Logger) {
 	sharedLogger = logger
@@ -62,23 +50,6 @@ func SetSharedLogger(logger *Logger) {
 // GetSharedLogger gets a shared singleton logger.
 func GetSharedLogger() *Logger {
 	return sharedLogger
-}
-
-var logLevelStrings = map[Level]string{
-	LevelDebug: "DEBUG",
-	LevelTrace: "TRACE",
-	LevelInfo:  "INFO",
-	LevelWarn:  "WARN",
-	LevelError: "ERROR",
-	LevelFatal: "FATAL",
-}
-
-func getLevelString(logLevel Level) string {
-	logString, hasString := logLevelStrings[logLevel]
-	if !hasString {
-		return loggerLevelUnknownString
-	}
-	return logString
 }
 
 // SetLevel sets a output log level.
@@ -150,7 +121,7 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 		t.Year(), t.Month(), t.Day(),
 		t.Hour(), t.Minute(), t.Second())
 
-	headerString := fmt.Sprintf("[%s]", getLevelString(outputLevel))
+	headerString := fmt.Sprintf("[%s]", GetLevelString(outputLevel))
 	logMsg := fmt.Sprintf(msgFormat, msgArgs...)
 
 	outMsgLen := 0
