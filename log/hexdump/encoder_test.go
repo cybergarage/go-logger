@@ -20,7 +20,7 @@ import (
 func TestASCIIEncode(t *testing.T) {
 	src := "\t\babcdefghijklmnopqrstuvwxyz"
 
-	hexStrs, strs := encodeBytesToStringLinesWithASCII([]byte(src))
+	hexStrs, strs := encodeBytesToHexDumpStringLines([]byte(src))
 	if len(hexStrs) != len(strs) {
 		t.Errorf("%d != %d", len(hexStrs), len(strs))
 	}

@@ -18,14 +18,8 @@ import (
 	"unicode"
 )
 
-const (
-	hexdumpLineBytes             = 8
-	hexdumpTwoColumnBytes        = hexdumpLineBytes * 2
-	hexdumpTwoColumnASCIIByteLen = 77
-)
-
-// encodeBytesToStringLinesWithASCII returns the hexadecimal encoding strings of src with the ASCII repsentations.
-func encodeBytesToStringLinesWithASCII(src []byte) ([]string, []string) {
+// encodeBytesToHexDumpStringLines returns the hexadecimal encoding strings of src with the ASCII repsentations.
+func encodeBytesToHexDumpStringLines(src []byte) ([]string, []string) {
 	srcLen := len(src)
 
 	hexStrs := make([]string, 0)
@@ -73,7 +67,7 @@ func encodeBytesToStringLinesWithASCII(src []byte) ([]string, []string) {
 
 // EncodeBytesToStringLines returns the hexadecimal encoding strings of src with the ASCII repsentations.
 func EncodeBytesToStringLines(src []byte) []string {
-	hexStrs, strs := encodeBytesToStringLinesWithASCII(src)
+	hexStrs, strs := encodeBytesToHexDumpStringLines(src)
 
 	lineStrs := make([]string, 0)
 
