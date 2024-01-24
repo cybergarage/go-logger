@@ -21,30 +21,34 @@ SHELL := bash
 MODULE_ROOT=github.com/cybergarage/go-logger
 
 PKG_NAME=log
+PKG_VER=$(shell git describe --abbrev=0 --tags)
+PKG_COVER=${PKG_NAME}-cover
+
 PKG_ID=${MODULE_ROOT}/${PKG_NAME}
 PKG_SRC_DIR=${PKG_NAME}
-PKG_SRCS=\
-        ${PKG_SRC_DIR} \
-        ${PKG_SRC_DIR}/hexdump
-PKGS=\
-	${PKG_ID} \
-	${PKG_ID}/hexdump
+PKG=${MODULE_ROOT}/${PKG_SRC_DIR}
+
+TEST_PKG_NAME=${PKG_NAME}test
+TEST_PKG_ID=${MODULE_ROOT}/${TEST_PKG_NAME}
+TEST_PKG_DIR=${TEST_PKG_NAME}
+TEST_PKG=${MODULE_ROOT}/${TEST_PKG_DIR}
 
 .PHONY: format vet lint clean
 
 all: test
 
 format:
-	gofmt -w ${PKG_SRC_DIR}
+	gofmt -w ${PKG_SRC_DIR} ${TEST_PKG_DIR}
 
 vet: format
 	go vet ${PKG_ID}
 
 lint: vet
-	golangci-lint run ${PKG_SRCS}
+	golangci-lint run ${PKG_SRC_DIR}/... ${TEST_PKG_DIR}/...
 
 test: lint
-	go test -v -cover -timeout 60s ${PKGS}
+	go test -v -p 1 -timeout 10m -cover -coverpkg=${PKG}/... -coverprofile=${PKG_COVER}.out ${PKG}/... ${TEST_PKG}/...
+	go tool cover -html=${PKG_COVER}.out -o ${PKG_COVER}.html
 
 clean:
-	go clean -i ${PKGS}
+	go clean -i ${PKG} ${TEST_PKG}
