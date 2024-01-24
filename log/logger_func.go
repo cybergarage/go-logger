@@ -14,11 +14,56 @@
 
 package log
 
-// SetStdoutDebugEnbled sets a trace stdout logger for debug.
-func SetStdoutDebugEnbled(flag bool) {
-	if flag {
-		SetSharedLogger(NewStdoutLogger(LevelTrace))
-	} else {
-		SetSharedLogger(nil)
-	}
+// Debugf outputs a debug level message to loggers.
+func Debugf(format string, args ...interface{}) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelDebug, format, args...)
+}
+
+// Tracef outputs trace level message to loggers.
+func Tracef(format string, args ...interface{}) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelTrace, format, args...)
+}
+
+// Infof outputs a information level message to loggers.
+func Infof(format string, args ...interface{}) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelInfo, format, args...)
+}
+
+// Warnf outputs a warning level message to loggers.
+func Warnf(format string, args ...interface{}) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelWarn, format, args...)
+}
+
+// Errorf outputs a error level message to loggers.
+func Errorf(format string, args ...interface{}) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelError, format, args...)
+}
+
+// Fatalf outputs a fatal level message to loggers.
+func Fatalf(format string, args ...interface{}) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelFatal, format, args...)
+}
+
+// Outputf outputs the specified level message to loggers.
+func Outputf(outputLevel Level, format string, args ...interface{}) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(outputLevel, format, args...)
+}
+
+// Error outputs a error level message to loggers.
+func Error(err error) int {
+	return Errorf("%s", err.Error())
 }
