@@ -19,7 +19,7 @@ import (
 )
 
 // DecodeStringToBytes returns the bytes of the specified string.
-func DecodeStringToBytes(src string) []byte {
+func DecodeStringToBytes(src string) ([]byte, error) {
 	hexes := strings.Split(src, " ")
 	var bytes []byte
 	for n, s := range hexes {
@@ -28,18 +28,22 @@ func DecodeStringToBytes(src string) []byte {
 		}
 		hexByte, err := hex.DecodeString(s)
 		if err != nil {
-			panic(err)
+			return bytes, err
 		}
 		bytes = append(bytes, hexByte...)
 	}
-	return bytes
+	return bytes, nil
 }
 
 // DecodeStringLinesToBytes returns the bytes of the specified string lines.
-func DecodeStringLinesToBytes(lines []string) []byte {
+func DecodeStringLinesToBytes(lines []string) ([]byte, error) {
 	var bytes []byte
 	for _, line := range lines {
-		bytes = append(bytes, DecodeStringToBytes(line)...)
+		lineBytes, err := DecodeStringToBytes(line)
+		if err != nil {
+			return bytes, err
+		}
+		bytes = append(bytes, lineBytes...)
 	}
-	return bytes
+	return bytes, nil
 }
