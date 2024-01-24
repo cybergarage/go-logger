@@ -18,12 +18,16 @@ import (
 	"testing"
 )
 
-func TestDecode(t *testing.T) {
+func TestHexDecode(t *testing.T) {
 	src := []byte("abcdefghijklmnopqrstuvwxyz1234567890")
 	for i := 0; i < len(src); i++ {
 		srcBytes := src[0:i]
 		encodedLines := EncodeBytesToStringLines(srcBytes)
-		decodedBytes := DecodeStringLinesToBytes(encodedLines)
+		decodedBytes, err := DecodeStringLinesToBytes(encodedLines)
+		if err != nil {
+			t.Error(err)
+			break
+		}
 		if !bytes.Equal(decodedBytes, srcBytes) {
 			t.Errorf("%s != %s", decodedBytes, srcBytes)
 			break
