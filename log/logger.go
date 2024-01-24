@@ -15,31 +15,21 @@
 package log
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"strings"
 	"sync"
 	"time"
 )
 
-const (
-	logFormat                = "%s %s %s"
-	logFilePerm              = 0644
-	LF                       = "\n"
-	loggerLevelUnknownString = "UNKNOWN"
-	loggerStdout             = "stdout"
-)
-
 var sharedLogger *Logger
 var sharedLoggerMutex = &sync.Mutex{}
 
-type LoggerOutpter func(file string, level Level, msg string) (int, error)
+type LoggerOutpter func(logger *Logger, level Level, msg string) (int, error)
 
 type Logger struct {
-	File     string
 	level    Level
 	outputer LoggerOutpter
+	data     any
 }
 
 // SetSharedLogger sets a singleton logger.
@@ -67,45 +57,6 @@ func (logger *Logger) IsLevel(logLevel Level) bool {
 	return logLevel >= logger.level
 }
 
-// NewStdoutLogger creates a stdout logger.
-func NewStdoutLogger(level Level) *Logger {
-	logger := &Logger{
-		File:     loggerStdout,
-		level:    level,
-		outputer: outputStdout}
-	return logger
-}
-
-func outputStdout(_ string, _ Level, msg string) (int, error) {
-	fmt.Println(msg)
-	return len(msg), nil
-}
-
-// NewFileLogger creates a file based logger.
-func NewFileLogger(file string, level Level) *Logger {
-	logger := &Logger{
-		File:     file,
-		level:    level,
-		outputer: outputToFile}
-	return logger
-}
-
-func outputToFile(file string, _ Level, msg string) (int, error) {
-	msgBytes := []byte(msg + LF)
-	fd, err := os.OpenFile(file, (os.O_WRONLY | os.O_CREATE | os.O_APPEND), logFilePerm)
-	if err != nil {
-		return 0, err
-	}
-
-	writer := bufio.NewWriter(fd)
-	writer.Write(msgBytes)
-	writer.Flush()
-
-	fd.Close()
-
-	return len(msgBytes), nil
-}
-
 func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 	if sharedLogger == nil {
 		return 0
@@ -117,82 +68,20 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 	}
 
 	t := time.Now()
-	logDate := fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d",
+	logDate := fmt.Sprintf(logPrefixDateFormat,
 		t.Year(), t.Month(), t.Day(),
 		t.Hour(), t.Minute(), t.Second())
 
-	headerString := fmt.Sprintf("[%s]", GetLevelString(outputLevel))
 	logMsg := fmt.Sprintf(msgFormat, msgArgs...)
 
 	outMsgLen := 0
 	if 0 < len(logMsg) {
 		for _, lineMsg := range strings.Split(logMsg, "\n") {
-			lineMsg := fmt.Sprintf(logFormat, logDate, headerString, lineMsg)
-			n, _ := sharedLogger.outputer(sharedLogger.File, logLevel, lineMsg)
+			lineMsg := fmt.Sprintf(logPrefixFormat, logDate, GetLevelString(outputLevel), lineMsg)
+			n, _ := sharedLogger.outputer(sharedLogger, logLevel, lineMsg)
 			outMsgLen += n
 		}
 	}
 
 	return outMsgLen
-}
-
-// Debugf outputs a debug level message to loggers.
-func Debugf(format string, args ...interface{}) int {
-	sharedLoggerMutex.Lock()
-	defer sharedLoggerMutex.Unlock()
-
-	return output(LevelDebug, format, args...)
-}
-
-// Tracef outputs trace level message to loggers.
-func Tracef(format string, args ...interface{}) int {
-	sharedLoggerMutex.Lock()
-	defer sharedLoggerMutex.Unlock()
-
-	return output(LevelTrace, format, args...)
-}
-
-// Infof outputs a information level message to loggers.
-func Infof(format string, args ...interface{}) int {
-	sharedLoggerMutex.Lock()
-	defer sharedLoggerMutex.Unlock()
-
-	return output(LevelInfo, format, args...)
-}
-
-// Warnf outputs a warning level message to loggers.
-func Warnf(format string, args ...interface{}) int {
-	sharedLoggerMutex.Lock()
-	defer sharedLoggerMutex.Unlock()
-
-	return output(LevelWarn, format, args...)
-}
-
-// Errorf outputs a error level message to loggers.
-func Errorf(format string, args ...interface{}) int {
-	sharedLoggerMutex.Lock()
-	defer sharedLoggerMutex.Unlock()
-
-	return output(LevelError, format, args...)
-}
-
-// Fatalf outputs a fatal level message to loggers.
-func Fatalf(format string, args ...interface{}) int {
-	sharedLoggerMutex.Lock()
-	defer sharedLoggerMutex.Unlock()
-
-	return output(LevelFatal, format, args...)
-}
-
-// Outputf outputs the specified level message to loggers.
-func Outputf(outputLevel Level, format string, args ...interface{}) int {
-	sharedLoggerMutex.Lock()
-	defer sharedLoggerMutex.Unlock()
-
-	return output(outputLevel, format, args...)
-}
-
-// Error outputs a error level message to loggers.
-func Error(err error) int {
-	return Errorf("%s", err.Error())
 }
