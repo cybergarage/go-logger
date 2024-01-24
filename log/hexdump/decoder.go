@@ -13,9 +13,26 @@
 // limitations under the License.
 package hexdump
 
+import (
+	"encoding/hex"
+	"strings"
+)
+
 // DecodeStringToBytes returns the bytes of the specified string.
 func DecodeStringToBytes(src string) []byte {
-	return nil
+	hexes := strings.Split(src, " ")
+	var bytes []byte
+	for n, s := range hexes {
+		if n == 0 {
+			continue
+		}
+		hexByte, err := hex.DecodeString(s)
+		if err != nil {
+			panic(err)
+		}
+		bytes = append(bytes, hexByte...)
+	}
+	return bytes
 }
 
 // DecodeStringLinesToBytes returns the bytes of the specified string lines.
