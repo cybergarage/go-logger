@@ -15,6 +15,8 @@
 package log
 
 import (
+	"regexp"
+
 	"github.com/cybergarage/go-logger/log/hexdump"
 )
 
@@ -52,11 +54,22 @@ func HexFatal(bytes []byte) int {
 func HexOutput(outputLevel Level, bytes []byte) int {
 	sharedLoggerMutex.Lock()
 	defer sharedLoggerMutex.Unlock()
-
 	nOutput := 0
 	lines := hexdump.EncodeBytesToStringLines(bytes)
 	for _, line := range lines {
 		nOutput += output(outputLevel, line)
 	}
 	return nOutput
+}
+
+// DecodeHexLog decodes the specified hex log.
+func DecodeHexLog(logs []string) ([]byte, error) {
+	logPrefixReg := regexp.MustCompile(logPrefixRegex)
+	for n, log := range logs {
+		if !logPrefixReg.MatchString(log) {
+			continue
+		}
+		logs[n] = logPrefixReg.ReplaceAllString(log, "")
+	}
+	return hexdump.DecodeStringLinesToBytes(logs)
 }
