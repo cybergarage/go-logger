@@ -20,10 +20,14 @@ import (
 
 // DecodeStringToBytes returns the bytes of the specified string.
 func DecodeStringToBytes(src string) ([]byte, error) {
-	hexes := strings.Split(src, " ")
+	if len(src) == 0 {
+		return []byte{}, nil
+	}
+	splitHexes := strings.Split(src, " ")
+	lineHexes := splitHexes[1 : hexdumpTwoColumnBytes+3]
 	var bytes []byte
-	for n, s := range hexes {
-		if n == 0 {
+	for _, s := range lineHexes {
+		if len(s) == 0 {
 			continue
 		}
 		hexByte, err := hex.DecodeString(s)
