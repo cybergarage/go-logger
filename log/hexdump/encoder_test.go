@@ -17,15 +17,15 @@ import (
 	"testing"
 )
 
-func TestASCIIHexdump(t *testing.T) {
+func TestASCIIEncode(t *testing.T) {
 	src := "\t\babcdefghijklmnopqrstuvwxyz"
 
-	hexStrs, strs := encodeToStringsWithStrings([]byte(src))
+	hexStrs, strs := encodeBytesToStringLinesWithASCII([]byte(src))
 	if len(hexStrs) != len(strs) {
 		t.Errorf("%d != %d", len(hexStrs), len(strs))
 	}
 
-	lineStrs := EncodeToStrings([]byte(src))
+	lineStrs := EncodeBytesToStringLines([]byte(src))
 	expectLen := (len(src) / hexdumpLineBytes / 2) + 1
 	if len(lineStrs) != expectLen {
 		t.Errorf("%d != %d", len(lineStrs), expectLen)

@@ -24,8 +24,8 @@ const (
 	hexdumpTwoColumnASCIIByteLen = 77
 )
 
-// encodeToStringsWithStrings returns the hexadecimal encoding strings of src with the ASCII repsentations.
-func encodeToStringsWithStrings(src []byte) ([]string, []string) {
+// encodeBytesToStringLinesWithASCII returns the hexadecimal encoding strings of src with the ASCII repsentations.
+func encodeBytesToStringLinesWithASCII(src []byte) ([]string, []string) {
 	srcLen := len(src)
 
 	hexStrs := make([]string, 0)
@@ -71,9 +71,9 @@ func encodeToStringsWithStrings(src []byte) ([]string, []string) {
 	return hexStrs, strs
 }
 
-// EncodeToStrings returns the hexadecimal encoding strings of src with the ASCII repsentations.
-func EncodeToStrings(src []byte) []string {
-	hexStrs, strs := encodeToStringsWithStrings(src)
+// EncodeBytesToStringLines returns the hexadecimal encoding strings of src with the ASCII repsentations.
+func EncodeBytesToStringLines(src []byte) []string {
+	hexStrs, strs := encodeBytesToStringLinesWithASCII(src)
 
 	lineStrs := make([]string, 0)
 
