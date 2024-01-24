@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package log
+package logtest
 
 import (
 	"errors"
 	"testing"
+
+	"github.com/cybergarage/go-logger/log"
 )
 
 const (
@@ -26,138 +28,137 @@ const (
 )
 
 func TestNullLogger(t *testing.T) {
-	SetSharedLogger(nil)
+	log.SetSharedLogger(nil)
 
-	nOutput := Tracef(testLogMessage)
+	nOutput := log.Tracef(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
-	nOutput = Infof(testLogMessage)
+	nOutput = log.Infof(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
-	nOutput = Errorf(testLogMessage)
+	nOutput = log.Errorf(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
-	nOutput = Warnf(testLogMessage)
+	nOutput = log.Warnf(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
-	nOutput = Fatalf(testLogMessage)
+	nOutput = log.Fatalf(testLogMessage)
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
-	nOutput = Error(errors.New(testLogMessage))
+	nOutput = log.Error(errors.New(testLogMessage))
 	if 0 < nOutput {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
 	// Hex*()
 
-	nOutput = HexDebug([]byte(testLogMessage))
+	nOutput = log.HexDebug([]byte(testLogMessage))
 	if 0 < nOutput {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexTrace([]byte(testLogMessage))
+	nOutput = log.HexTrace([]byte(testLogMessage))
 	if 0 < nOutput {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexInfo([]byte(testLogMessage))
+	nOutput = log.HexInfo([]byte(testLogMessage))
 	if 0 < nOutput {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexError([]byte(testLogMessage))
+	nOutput = log.HexError([]byte(testLogMessage))
 	if 0 < nOutput {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexWarn([]byte(testLogMessage))
+	nOutput = log.HexWarn([]byte(testLogMessage))
 	if 0 < nOutput {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexFatal([]byte(testLogMessage))
+	nOutput = log.HexFatal([]byte(testLogMessage))
 	if 0 < nOutput {
 		t.Error(errors.New(outputErrorMessage))
 	}
 }
 
 func TestStdoutLogger(t *testing.T) {
-	SetSharedLogger(NewStdoutLogger(LevelDebug))
-	defer SetSharedLogger(nil)
+	log.SetSharedLogger(log.NewStdoutLogger(log.LevelDebug))
 
-	nOutput := Debugf(testLogMessage)
+	nOutput := log.Debugf(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Tracef(testLogMessage)
+	nOutput = log.Tracef(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Infof(testLogMessage)
+	nOutput = log.Infof(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Errorf(testLogMessage)
+	nOutput = log.Errorf(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Warnf(testLogMessage)
+	nOutput = log.Warnf(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Fatalf(testLogMessage)
+	nOutput = log.Fatalf(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = Error(errors.New(testLogMessage))
+	nOutput = log.Error(errors.New(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(nullOutputErrorMessage))
 	}
 
 	// Hex*()
 
-	nOutput = HexDebug([]byte(testLogMessage))
+	nOutput = log.HexDebug([]byte(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexTrace([]byte(testLogMessage))
+	nOutput = log.HexTrace([]byte(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexInfo([]byte(testLogMessage))
+	nOutput = log.HexInfo([]byte(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexError([]byte(testLogMessage))
+	nOutput = log.HexError([]byte(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexWarn([]byte(testLogMessage))
+	nOutput = log.HexWarn([]byte(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = HexFatal([]byte(testLogMessage))
+	nOutput = log.HexFatal([]byte(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
