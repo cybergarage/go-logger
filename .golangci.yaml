@@ -28,3 +28,4 @@ linters:
     - forbidigo
     - gochecknoglobals
     - nosnakecase
+    - depguard
