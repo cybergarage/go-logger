@@ -18,12 +18,12 @@ import (
 	"strings"
 )
 
-// DecodeStringToBytes returns the bytes of the specified string.
-func DecodeStringToBytes(src string) ([]byte, error) {
-	if len(src) == 0 {
+// DecodeStringLineToBytes returns the bytes of the specified string.
+func DecodeStringLineToBytes(line string) ([]byte, error) {
+	if len(line) == 0 {
 		return []byte{}, nil
 	}
-	splitHexes := strings.Split(src, " ")
+	splitHexes := strings.Split(line, " ")
 	lineHexes := splitHexes[1 : hexdumpTwoColumnBytes+3]
 	var bytes []byte
 	for _, s := range lineHexes {
@@ -43,7 +43,7 @@ func DecodeStringToBytes(src string) ([]byte, error) {
 func DecodeStringLinesToBytes(lines []string) ([]byte, error) {
 	var bytes []byte
 	for _, line := range lines {
-		lineBytes, err := DecodeStringToBytes(line)
+		lineBytes, err := DecodeStringLineToBytes(line)
 		if err != nil {
 			return bytes, err
 		}
