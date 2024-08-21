@@ -15,7 +15,8 @@
 package fmt
 
 const (
-	LogPrefixFormat     = "%s [%s] %s"
-	LogPrefixDateFormat = "%04d-%02d-%02d %02d:%02d:%02d"
-	LogPrefixRegex      = `^(\d{4})-\d{2}-\d{2} \d{2}:\d{2}:\d{2} \[(\w+)\] `
+	LogPrefixFormat        = "%s [%s] %s"
+	LogPrefixDateFormat    = "%04d-%02d-%02d %02d:%02d:%02d"
+	LogPrefixDateFormatLen = 19
+	LogPrefixRegex         = `^(\d{4})-\d{2}-\d{2} \d{2}:\d{2}:\d{2} \[(\w+)\] `
 )
