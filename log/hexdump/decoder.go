@@ -15,7 +15,11 @@ package hexdump
 
 import (
 	"encoding/hex"
+	"os"
+	"regexp"
 	"strings"
+
+	"github.com/cybergarage/go-logger/log/fmt"
 )
 
 // DecodeStringLineToBytes returns the bytes of the specified string.
@@ -50,4 +54,27 @@ func DecodeStringLinesToBytes(lines []string) ([]byte, error) {
 		bytes = append(bytes, lineBytes...)
 	}
 	return bytes, nil
+}
+
+// DecodeHexLogs decodes the specified hex log.
+func DecodeHexLogs(logs []string) ([]byte, error) {
+	logPrefixReg := regexp.MustCompile(fmt.LogPrefixRegex)
+	for n, log := range logs {
+		if !logPrefixReg.MatchString(log) {
+			continue
+		}
+		logs[n] = logPrefixReg.ReplaceAllString(log, "")
+	}
+	return DecodeStringLinesToBytes(logs)
+}
+
+// DecodeHexLogFile decodes the specified hex log file.
+func DecodeHexLogFile(filename string) ([]byte, error) {
+	fileBytes, err := os.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	lines := make([]string, 0)
+	lines = append(lines, strings.Split(string(fileBytes), "\n")...)
+	return DecodeHexLogs(lines)
 }
