@@ -30,6 +30,8 @@ package main
 import (
 	"flag"
 	"os"
+
+	"github.com/cybergarage/go-logger/log/hexdump"
 )
 
 const (
@@ -53,15 +55,20 @@ func main() {
 		usages()
 	}
 
-	// hexFileName := args[0]
+	hexFileName := args[0]
 
-	// binFileName := args[1]
+	hexBytes, err := hexdump.DecodeHexLogFile(hexFileName)
+	if err != nil {
+		println(err.Error())
+		os.Exit(1)
+	}
 
-	// hexFile, err := os.Open(hexFileName)
-	// if err != nil {
-	// 	println("Failed to open the hex file : " + hexFileName)
-	// 	os.Exit(1)
-	// }
+	binFileName := args[1]
+	err = os.WriteFile(binFileName, hexBytes, 0600)
+	if err != nil {
+		println(err.Error())
+		os.Exit(1)
+	}
 
 	os.Exit(0)
 }
