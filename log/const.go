@@ -15,9 +15,6 @@
 package log
 
 const (
-	logPrefixFormat          = "%s [%s] %s"
-	logPrefixDateFormat      = "%04d-%02d-%02d %02d:%02d:%02d"
-	logPrefixRegex           = `^(\d{4})-\d{2}-\d{2} \d{2}:\d{2}:\d{2} \[(\w+)\] `
 	logFilePerm              = 0644
 	LF                       = "\n"
 	loggerLevelUnknownString = "UNKNOWN"
