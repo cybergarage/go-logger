@@ -3,6 +3,10 @@
 	* Update by golang.org/x/exp/slog
 	* Update outputer to split by line fields
 
+2024-XX-XX The go-logger Authors <skonno@cybergarage.org>
+	* v1.3.6
+	* Add hex dump utilities
+
 2024-01-24 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.5
 	* Add new buffer logger
