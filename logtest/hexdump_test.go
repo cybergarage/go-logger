@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/cybergarage/go-logger/log"
+	"github.com/cybergarage/go-logger/log/fmt"
 	"github.com/cybergarage/go-logger/log/hexdump"
 )
 
@@ -29,9 +30,40 @@ func TestHexDecode(t *testing.T) {
 		log.SetSharedLogger(log.NewBufferLogger(buffer, log.LevelInfo))
 		msgBytes := msg[0:n]
 		log.HexInfo(msgBytes)
+
+		// Decode log lines
+
 		logStr := buffer.String()
 		logLines := strings.Split(logStr, log.LF)
 		decodedBytes, err := hexdump.DecodeHexLogs(logLines)
+		if err != nil {
+			t.Error(err)
+			break
+		}
+		if !bytes.Equal(decodedBytes, msgBytes) {
+			t.Errorf("%s != %s", decodedBytes, msgBytes)
+			break
+		}
+
+		// Decode log lines without timestamp and offset prefix
+
+		logStr = buffer.String()
+		logLines = strings.Split(logStr, log.LF)
+		logLinesWithoutPrefix := []string{}
+		for _, logLine := range logLines {
+			if len(logLine) < fmt.LogPrefixDateFormatLen {
+				continue
+			}
+			logLineWithoutTimestamp := logLine[fmt.LogPrefixDateFormatLen:]
+			logLineWithoutTimestamp = strings.TrimSpace(logLineWithoutTimestamp)
+			logLineWithoutPrefixes := strings.SplitN(logLineWithoutTimestamp, " ", 2)
+			if len(logLineWithoutPrefixes) < 2 {
+				continue
+			}
+			logLineWithoutPrefix := logLineWithoutPrefixes[1]
+			logLinesWithoutPrefix = append(logLinesWithoutPrefix, logLineWithoutPrefix)
+		}
+		decodedBytes, err = hexdump.DecodeHexLogs(logLinesWithoutPrefix)
 		if err != nil {
 			t.Error(err)
 			break
