@@ -33,22 +33,34 @@ TEST_PKG_ID=${MODULE_ROOT}/${TEST_PKG_NAME}
 TEST_PKG_DIR=${TEST_PKG_NAME}
 TEST_PKG=${MODULE_ROOT}/${TEST_PKG_DIR}
 
+CMD_ROOT=cmd
+CMD_PKG_ROOT=${MODULE_ROOT}/${CMD_ROOT}
+CMD_SRC_DIR=${CMD_ROOT}
+CMD_BINARIES=\
+	${CMD_PKG_ROOT}/hexdump2bin
+
+BINARIES=\
+	${CMD_BINARIES}
+
 .PHONY: format vet lint clean
 
 all: test
 
 format:
-	gofmt -w ${PKG_SRC_DIR} ${TEST_PKG_DIR}
+	gofmt -w ${PKG_SRC_DIR} ${TEST_PKG_DIR} ${CMD_SRC_DIR}
 
 vet: format
 	go vet ${PKG_ID}
 
 lint: vet
-	golangci-lint run ${PKG_SRC_DIR}/... ${TEST_PKG_DIR}/...
+	golangci-lint run ${PKG_SRC_DIR}/... ${TEST_PKG_DIR}/... ${CMD_SRC_DIR}/...
 
 test: lint
 	go test -v -p 1 -timeout 10m -cover -coverpkg=${PKG}/... -coverprofile=${PKG_COVER}.out ${PKG}/... ${TEST_PKG}/...
 	go tool cover -html=${PKG_COVER}.out -o ${PKG_COVER}.html
+
+install:
+	go install -v ${BINARIES}
 
 clean:
 	go clean -i ${PKG} ${TEST_PKG}
