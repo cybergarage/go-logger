@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/cybergarage/go-logger/log"
+	"github.com/cybergarage/go-logger/log/hexdump"
 )
 
 func TestHexDecode(t *testing.T) {
@@ -30,7 +31,7 @@ func TestHexDecode(t *testing.T) {
 		log.HexInfo(msgBytes)
 		logStr := buffer.String()
 		logLines := strings.Split(logStr, log.LF)
-		decodedBytes, err := log.DecodeHexLog(logLines)
+		decodedBytes, err := hexdump.DecodeHexLogs(logLines)
 		if err != nil {
 			t.Error(err)
 			break

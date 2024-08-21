@@ -15,10 +15,12 @@
 package log
 
 import (
-	"fmt"
+	std_fmt "fmt"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/cybergarage/go-logger/log/fmt"
 )
 
 var sharedLogger *Logger
@@ -68,16 +70,16 @@ func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
 	}
 
 	t := time.Now()
-	logDate := fmt.Sprintf(logPrefixDateFormat,
+	logDate := std_fmt.Sprintf(fmt.LogPrefixDateFormat,
 		t.Year(), t.Month(), t.Day(),
 		t.Hour(), t.Minute(), t.Second())
 
-	logMsg := fmt.Sprintf(msgFormat, msgArgs...)
+	logMsg := std_fmt.Sprintf(msgFormat, msgArgs...)
 
 	outMsgLen := 0
 	if 0 < len(logMsg) {
 		for _, lineMsg := range strings.Split(logMsg, "\n") {
-			lineMsg := fmt.Sprintf(logPrefixFormat, logDate, GetLevelString(outputLevel), lineMsg)
+			lineMsg := std_fmt.Sprintf(fmt.LogPrefixFormat, logDate, GetLevelString(outputLevel), lineMsg)
 			n, _ := sharedLogger.outputer(sharedLogger, logLevel, lineMsg)
 			outMsgLen += n
 		}
