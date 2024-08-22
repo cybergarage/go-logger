@@ -27,8 +27,11 @@ func DecodeLine(line string) ([]byte, error) {
 	if len(line) == 0 {
 		return []byte{}, nil
 	}
+	line = strings.TrimSpace(line)
+	line = strings.ReplaceAll(line, "  ", " ")
 	splitHexes := strings.Split(line, " ")
-	lineHexes := splitHexes[1 : hexdumpTwoColumnBytes+3]
+	offset := 1
+	lineHexes := splitHexes[offset : hexdumpTwoColumnBytes+offset+1]
 	var bytes []byte
 	for _, s := range lineHexes {
 		if len(s) == 0 {
