@@ -28,7 +28,16 @@ func DecodeLine(line string) ([]byte, error) {
 		return []byte{}, nil
 	}
 	line = strings.TrimSpace(line)
-	line = strings.ReplaceAll(line, "  ", " ")
+	reps := []struct {
+		from string
+		to   string
+	}{
+		{"    ", " "},
+		{"  ", " "},
+	}
+	for _, rep := range reps {
+		line = strings.ReplaceAll(line, rep.from, rep.to)
+	}
 	splitHexes := strings.Split(line, " ")
 	offset := 1
 	lineHexes := splitHexes[offset : hexdumpTwoColumnBytes+offset+1]
