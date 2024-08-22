@@ -5,6 +5,7 @@
 
 2024-XX-XX The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.6
+	* Update hexdump functions
 	* Add hex dump utilities
 
 2024-01-24 The go-logger Authors <skonno@cybergarage.org>
