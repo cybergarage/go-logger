@@ -35,7 +35,7 @@ func TestHexDecode(t *testing.T) {
 
 		logStr := buffer.String()
 		logLines := strings.Split(logStr, log.LF)
-		decodedBytes, err := hexdump.DecodeHexLogs(logLines)
+		decodedBytes, err := hexdump.DecodeLogs(logLines)
 		if err != nil {
 			t.Error(err)
 			break
@@ -63,7 +63,7 @@ func TestHexDecode(t *testing.T) {
 			logLineWithoutPrefix := logLineWithoutPrefixes[1]
 			logLinesWithoutPrefix = append(logLinesWithoutPrefix, logLineWithoutPrefix)
 		}
-		decodedBytes, err = hexdump.DecodeHexLogs(logLinesWithoutPrefix)
+		decodedBytes, err = hexdump.DecodeLogs(logLinesWithoutPrefix)
 		if err != nil {
 			t.Error(err)
 			break

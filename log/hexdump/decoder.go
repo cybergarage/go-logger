@@ -22,8 +22,8 @@ import (
 	"github.com/cybergarage/go-logger/log/fmt"
 )
 
-// DecodeStringLineToBytes returns the bytes of the specified string.
-func DecodeStringLineToBytes(line string) ([]byte, error) {
+// DecodeLine returns the bytes of the specified string.
+func DecodeLine(line string) ([]byte, error) {
 	if len(line) == 0 {
 		return []byte{}, nil
 	}
@@ -43,11 +43,11 @@ func DecodeStringLineToBytes(line string) ([]byte, error) {
 	return bytes, nil
 }
 
-// DecodeStringLinesToBytes returns the bytes of the specified string lines.
-func DecodeStringLinesToBytes(lines []string) ([]byte, error) {
+// DecodeLinesToBytes returns the bytes of the specified string lines.
+func DecodeLinesToBytes(lines []string) ([]byte, error) {
 	var bytes []byte
 	for _, line := range lines {
-		lineBytes, err := DecodeStringLineToBytes(line)
+		lineBytes, err := DecodeLine(line)
 		if err != nil {
 			return bytes, err
 		}
@@ -56,8 +56,8 @@ func DecodeStringLinesToBytes(lines []string) ([]byte, error) {
 	return bytes, nil
 }
 
-// DecodeHexLogs decodes the specified hex log.
-func DecodeHexLogs(logs []string) ([]byte, error) {
+// DecodeLogs decodes the specified hex log.
+func DecodeLogs(logs []string) ([]byte, error) {
 	logPrefixReg := regexp.MustCompile(fmt.LogPrefixRegex)
 	for n, log := range logs {
 		if !logPrefixReg.MatchString(log) {
@@ -65,16 +65,16 @@ func DecodeHexLogs(logs []string) ([]byte, error) {
 		}
 		logs[n] = logPrefixReg.ReplaceAllString(log, "")
 	}
-	return DecodeStringLinesToBytes(logs)
+	return DecodeLinesToBytes(logs)
 }
 
-// DecodeHexLogFile decodes the specified hex log file.
-func DecodeHexLogFile(filename string) ([]byte, error) {
+// DecodeLogFile decodes the specified hex log file.
+func DecodeLogFile(filename string) ([]byte, error) {
 	fileBytes, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
 	lines := make([]string, 0)
 	lines = append(lines, strings.Split(string(fileBytes), "\n")...)
-	return DecodeHexLogs(lines)
+	return DecodeLogs(lines)
 }
