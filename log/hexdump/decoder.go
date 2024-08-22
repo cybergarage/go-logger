@@ -32,7 +32,6 @@ func DecodeLine(line string) ([]byte, error) {
 		from string
 		to   string
 	}{
-		{"    ", " "},
 		{"  ", " "},
 	}
 	for _, rep := range reps {
@@ -44,7 +43,7 @@ func DecodeLine(line string) ([]byte, error) {
 	var bytes []byte
 	for _, s := range lineHexes {
 		if len(s) == 0 {
-			continue
+			break
 		}
 		hexByte, err := hex.DecodeString(s)
 		if err != nil {
