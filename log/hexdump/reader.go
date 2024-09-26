@@ -21,7 +21,7 @@ import (
 
 // NewReaderWithFile returns a new Reader reading from the specified file.
 func NewReaderWithFile(filename string) (io.Reader, error) {
-	hexBytes, err := DecodeLogFile(filename)
+	hexBytes, err := DecodeHexdumpFile(filename)
 	if err != nil {
 		return nil, err
 	}
@@ -30,7 +30,7 @@ func NewReaderWithFile(filename string) (io.Reader, error) {
 
 // NewReaderWithBytes returns a new Reader reading from the specified bytes.
 func NewReaderWithBytes(b []byte) (io.Reader, error) {
-	hexBytes, err := DecodeLogBytes(b)
+	hexBytes, err := DecodeHexdumpBytes(b)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func NewReaderWithBytes(b []byte) (io.Reader, error) {
 
 // NewReaderWithString returns a new Reader reading from the specified string.
 func NewReaderWithString(str string) (io.Reader, error) {
-	hexBytes, err := DecodeLogString(str)
+	hexBytes, err := DecodeHexdumpString(str)
 	if err != nil {
 		return nil, err
 	}
