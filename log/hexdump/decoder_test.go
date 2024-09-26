@@ -29,7 +29,7 @@ func TestHexDecode(t *testing.T) {
 			break
 		}
 		if !bytes.Equal(decodedBytes, srcBytes) {
-			t.Errorf("%s != %s", decodedBytes, srcBytes)
+			t.Errorf("%s(%d) != %s(%d)", decodedBytes, i, srcBytes, i)
 			break
 		}
 	}
