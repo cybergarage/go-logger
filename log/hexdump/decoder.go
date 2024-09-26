@@ -32,7 +32,7 @@ func DecodeLine(line string) ([]byte, error) {
 		from string
 		to   string
 	}{
-		{"  ", " "},
+		{"   ", " "},
 	}
 	for _, rep := range reps {
 		line = strings.ReplaceAll(line, rep.from, rep.to)
