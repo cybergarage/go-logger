@@ -27,3 +27,21 @@ func NewReaderWithFile(filename string) (io.Reader, error) {
 	}
 	return bytes.NewReader(hexBytes), nil
 }
+
+// NewReaderWithBytes returns a new Reader reading from the specified bytes.
+func NewReaderWithBytes(b []byte) (io.Reader, error) {
+	hexBytes, err := DecodeLogBytes(b)
+	if err != nil {
+		return nil, err
+	}
+	return bytes.NewReader(hexBytes), nil
+}
+
+// NewReaderWithString returns a new Reader reading from the specified string.
+func NewReaderWithString(str string) (io.Reader, error) {
+	hexBytes, err := DecodeLogString(str)
+	if err != nil {
+		return nil, err
+	}
+	return bytes.NewReader(hexBytes), nil
+}
