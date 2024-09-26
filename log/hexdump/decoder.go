@@ -79,13 +79,23 @@ func DecodeLogs(logs []string) ([]byte, error) {
 	return DecodeLinesToBytes(logs)
 }
 
+// DecodeLogString decodes the specified hex log string.
+func DecodeLogString(str string) ([]byte, error) {
+	lines := make([]string, 0)
+	lines = append(lines, strings.Split(str, "\n")...)
+	return DecodeLogs(lines)
+}
+
+// DecodeLogBytes decodes the specified hex log bytes.
+func DecodeLogBytes(b []byte) ([]byte, error) {
+	return DecodeLogString(string(b))
+}
+
 // DecodeLogFile decodes the specified hex log file.
 func DecodeLogFile(filename string) ([]byte, error) {
 	fileBytes, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
-	lines := make([]string, 0)
-	lines = append(lines, strings.Split(string(fileBytes), "\n")...)
-	return DecodeLogs(lines)
+	return DecodeLogBytes(fileBytes)
 }
