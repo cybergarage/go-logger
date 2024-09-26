@@ -57,7 +57,7 @@ func main() {
 
 	hexFileName := args[0]
 
-	hexBytes, err := hexdump.DecodeLogFile(hexFileName)
+	hexBytes, err := hexdump.DecodeHexdumpFile(hexFileName)
 	if err != nil {
 		println(err.Error())
 		os.Exit(1)
