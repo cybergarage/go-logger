@@ -18,6 +18,23 @@ import (
 	"unicode"
 )
 
+// EncodeByteToASCIIString converts the specified bytes to ASCII strings.
+func EncodeByteToASCIIString(r rune) string {
+	if unicode.IsPrint(r) {
+		return fmt.Sprintf("%c", r)
+	}
+	return "."
+}
+
+// EncodeBytesToASCIIString converts the specified bytes to ASCII strings.
+func EncodeBytesToASCIIString(bytes []byte) string {
+	str := ""
+	for _, b := range bytes {
+		str += EncodeByteToASCIIString(rune(b))
+	}
+	return str
+}
+
 // encodeBytesToHexDumpStringLines returns the hexadecimal encoding strings of src with the ASCII repsentations.
 func encodeBytesToHexDumpStringLines(src []byte) ([]string, []string) {
 	srcLen := len(src)
@@ -49,12 +66,7 @@ func encodeBytesToHexDumpStringLines(src []byte) ([]string, []string) {
 		lineStr := ""
 		for n := 0; n < hexdumpLineBytes; n++ {
 			if n < lineLen {
-				r := rune(src[offset+n])
-				if unicode.IsPrint(r) {
-					lineStr += fmt.Sprintf("%c", r)
-				} else {
-					lineStr += "."
-				}
+				lineStr += EncodeByteToASCIIString(rune(src[offset+n]))
 				continue
 			}
 			lineStr += "   "
