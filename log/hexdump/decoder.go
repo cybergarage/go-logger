@@ -40,27 +40,25 @@ func DecodeHexdumpLine(line string) ([]byte, error) {
 	// Remove the ASCII part
 	line = line[:hexdumpTwoLineColumnByteLen]
 
-	reps := []struct {
-		from string
-		to   string
-	}{
-		{"  ", " "},
+	// Remove blank spaces
+	splitHexes := make([]string, 0)
+	for _, s := range strings.Split(line, " ") {
+		if len(s) == 0 {
+			continue
+		}
+		splitHexes = append(splitHexes, s)
 	}
-	for _, rep := range reps {
-		line = strings.ReplaceAll(line, rep.from, rep.to)
-	}
-	splitHexes := strings.Split(line, " ")
+
+	// Decode the hex strings
 	var bytes []byte
 	for _, s := range splitHexes {
-		if len(s) == 0 {
-			break
-		}
 		hexByte, err := hex.DecodeString(s)
 		if err != nil {
 			return bytes, err
 		}
 		bytes = append(bytes, hexByte...)
 	}
+
 	return bytes, nil
 }
 
