@@ -26,7 +26,7 @@ func TestASCIIEncode(t *testing.T) {
 	}
 
 	lineStrs := EncodeBytesToStringLines([]byte(src))
-	expectLen := (len(src) / hexdumpLineBytes / 2) + 1
+	expectLen := (len(src) / hexdumpLineColums / 2) + 1
 	if len(lineStrs) != expectLen {
 		t.Errorf("%d != %d", len(lineStrs), expectLen)
 	}
