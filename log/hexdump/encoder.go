@@ -42,16 +42,16 @@ func encodeBytesToHexDumpStringLines(src []byte) ([]string, []string) {
 	hexStrs := make([]string, 0)
 	strs := make([]string, 0)
 
-	for offset := 0; offset < srcLen; offset += hexdumpLineBytes {
-		lineLen := hexdumpLineBytes
-		if srcLen < (offset + hexdumpLineBytes) {
+	for offset := 0; offset < srcLen; offset += hexdumpLineColums {
+		lineLen := hexdumpLineColums
+		if srcLen < (offset + hexdumpLineColums) {
 			lineLen = srcLen - offset
 		}
 
 		// bytes -> hex strings
 
 		lineHexStr := ""
-		for n := 0; n < hexdumpLineBytes; n++ {
+		for n := 0; n < hexdumpLineColums; n++ {
 			if n < lineLen {
 				lineHexStr += fmt.Sprintf("%02X ", int(src[offset+n]))
 				continue
@@ -64,7 +64,7 @@ func encodeBytesToHexDumpStringLines(src []byte) ([]string, []string) {
 		// bytes -> ASCII strings
 
 		lineStr := ""
-		for n := 0; n < hexdumpLineBytes; n++ {
+		for n := 0; n < hexdumpLineColums; n++ {
 			if n < lineLen {
 				lineStr += EncodeByteToASCIIString(rune(src[offset+n]))
 				continue
@@ -87,7 +87,7 @@ func EncodeBytesToStringLines(src []byte) []string {
 	for n := 0; n < nLines; n += 2 {
 		// line header
 
-		lineStr := fmt.Sprintf("%04X ", n*hexdumpLineBytes)
+		lineStr := fmt.Sprintf("%04X ", n*hexdumpLineColums)
 
 		// two hex string lines
 

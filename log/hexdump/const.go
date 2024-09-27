@@ -14,7 +14,9 @@
 package hexdump
 
 const (
-	hexdumpLineBytes             = 8
-	hexdumpTwoColumnBytes        = hexdumpLineBytes * 2
-	hexdumpTwoColumnASCIIByteLen = 77
+	hexdumpLineColums            = 8
+	hexdumpLineColumnByteLen     = (2 * hexdumpLineColums) + (1 /* space */ * (hexdumpLineColums - 1))
+	hexdumpTwoLineColums         = hexdumpLineColums * 2
+	hexdumpTwoLineColumnByteLen  = (hexdumpLineColumnByteLen * 2) + (2 /* space */)
+	hexdumpTwoColumnASCIIByteLen = (hexdumpTwoLineColumnByteLen + (3 /* space */)) + hexdumpLineColums + (1 /* space */) + hexdumpLineColums
 )
