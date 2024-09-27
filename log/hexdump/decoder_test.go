@@ -21,7 +21,7 @@ import (
 
 func TestHexDecode(t *testing.T) {
 	src := []byte("abcdefghijklmnopqrstuvwxyz1234567890")
-	for i := 9; i < len(src); i++ {
+	for i := 1; i < len(src); i++ {
 		srcBytes := []byte(strings.Trim(string(src[0:i]), " "))
 		encodedLines := EncodeBytesToStringLines(srcBytes)
 		decodedBytes, err := DecodeHexdumpLines(encodedLines)
