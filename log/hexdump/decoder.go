@@ -22,12 +22,21 @@ import (
 	"github.com/cybergarage/go-logger/log/fmt"
 )
 
-// DecodeLine returns the bytes of the specified string.
-func DecodeLine(line string) ([]byte, error) {
+// DecodeHexdumpLine returns the bytes of the specified string.
+func DecodeHexdumpLine(line string) ([]byte, error) {
 	if len(line) == 0 {
 		return []byte{}, nil
 	}
+
+	// Remove the offset part
+
+	wsIdx := strings.Index(line, " ")
+	if wsIdx == -1 {
+		return []byte{}, nil
+	}
+	line = line[wsIdx:]
 	line = strings.TrimSpace(line)
+
 	reps := []struct {
 		from string
 		to   string
@@ -57,11 +66,11 @@ func DecodeLine(line string) ([]byte, error) {
 	return bytes, nil
 }
 
-// DecodeLinesToBytes returns the bytes of the specified string lines.
-func DecodeLinesToBytes(lines []string) ([]byte, error) {
+// DecodeHexdumpLines returns the bytes of the specified string lines.
+func DecodeHexdumpLines(lines []string) ([]byte, error) {
 	var bytes []byte
 	for _, line := range lines {
-		lineBytes, err := DecodeLine(line)
+		lineBytes, err := DecodeHexdumpLine(line)
 		if err != nil {
 			return bytes, err
 		}
@@ -70,8 +79,9 @@ func DecodeLinesToBytes(lines []string) ([]byte, error) {
 	return bytes, nil
 }
 
-// DecodeLogs decodes the specified hex log.
-func DecodeLogs(logs []string) ([]byte, error) {
+// DecodeHexdumpLogs decodes the specified hex log.
+func DecodeHexdumpLogs(logs []string) ([]byte, error) {
+	// Remove the log prefixes
 	logPrefixReg := regexp.MustCompile(fmt.LogPrefixRegex)
 	for n, log := range logs {
 		if !logPrefixReg.MatchString(log) {
@@ -79,14 +89,14 @@ func DecodeLogs(logs []string) ([]byte, error) {
 		}
 		logs[n] = logPrefixReg.ReplaceAllString(log, "")
 	}
-	return DecodeLinesToBytes(logs)
+	return DecodeHexdumpLines(logs)
 }
 
 // DecodeHexdumpString decodes the specified hex log string.
 func DecodeHexdumpString(str string) ([]byte, error) {
 	lines := make([]string, 0)
 	lines = append(lines, strings.Split(str, "\n")...)
-	return DecodeLinesToBytes(lines)
+	return DecodeHexdumpLines(lines)
 }
 
 // DecodeHexdumpBytes decodes the specified hex log bytes.
