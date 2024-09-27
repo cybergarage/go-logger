@@ -37,24 +37,22 @@ func DecodeHexdumpLine(line string) ([]byte, error) {
 	line = line[wsIdx:]
 	line = strings.TrimSpace(line)
 
+	// Remove the ASCII part
+	line = line[:hexdumpTwoLineColumnByteLen]
+
 	reps := []struct {
 		from string
 		to   string
 	}{
-		{"   ", " "},
+		{"  ", " "},
 	}
 	for _, rep := range reps {
 		line = strings.ReplaceAll(line, rep.from, rep.to)
 	}
 	splitHexes := strings.Split(line, " ")
-	offset := 1
-	lineHexes := splitHexes[offset : hexdumpTwoColumnBytes+offset+1]
 	var bytes []byte
-	for n, s := range lineHexes {
+	for _, s := range splitHexes {
 		if len(s) == 0 {
-			if n == 0 {
-				continue
-			}
 			break
 		}
 		hexByte, err := hex.DecodeString(s)
