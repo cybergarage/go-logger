@@ -3,9 +3,9 @@
 	* Updated by golang.org/x/exp/slog
 	* Updated outputer to split by line fields
 
-2024-09-xx The go-logger Authors <skonno@cybergarage.org>
+2024-10-01 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.7
-	* Updated hexdump functions
+	* Update hexdump functions
 
 2024-09-26 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.6
@@ -36,17 +36,17 @@
 
 2022-09-05 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.0
-    * Renamed log.*() to log.*f()
-    * Added Error()
+	* Renamed log.*() to log.*f()
+	* Added Error()
 
 2022-08-13 The go-logger Authors <skonno@cybergarage.org>
 	* v1.2.0
-    * Added Hex*() to dump binary protocol bytes
+	* Added Hex*() to dump binary protocol bytes
 
 2022-08-02 The go-logger Authors <skonno@cybergarage.org>
 	* v1.1.0
-    * Added Debug()
+	* Added Debug()
 
 2022-07-28 The go-logger Authors <skonno@cybergarage.org>
 	* v1.0.0
-    * The first release
+	* The first release
