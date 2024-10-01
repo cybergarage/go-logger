@@ -16,13 +16,12 @@ package logtest
 import (
 	"bytes"
 	_ "embed"
-	"io"
 	"testing"
 
 	"github.com/cybergarage/go-logger/log/hexdump"
 )
 
-func TestHexdumpReader(t *testing.T) {
+func TestHexdumpBytes(t *testing.T) {
 	for _, test := range []struct {
 		name     string
 		data     string
@@ -45,12 +44,7 @@ func TestHexdumpReader(t *testing.T) {
 		},
 	} {
 		t.Run(test.name, func(t *testing.T) {
-			reader, err := hexdump.NewReaderFromHexdumpString(test.data)
-			if err != nil {
-				t.Error(err)
-				return
-			}
-			decodedBytes, err := io.ReadAll(reader)
+			decodedBytes, err := hexdump.NewBytesWithHexdumpString(test.data)
 			if err != nil {
 				t.Error(err)
 				return
