@@ -22,3 +22,10 @@ const (
 	hexdumpTwoLineColumnByteLen  = (hexdumpLineColumnByteLen * 2) + len(hexdumpLineSep)
 	hexdumpTwoColumnASCIIByteLen = (hexdumpTwoLineColumnByteLen + len(hexdumpLineSep)) + hexdumpLineColums + len(hexdumpASCIISep) + hexdumpLineColums
 )
+
+const (
+	LogPrefixFormat        = "%s [%s] %s"
+	LogPrefixDateFormat    = "%04d-%02d-%02d %02d:%02d:%02d"
+	LogPrefixDateFormatLen = 19
+	OffsetPrefixRegex      = `^(\d{4})(\d)*`
+)
