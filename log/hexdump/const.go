@@ -28,4 +28,5 @@ const (
 	LogPrefixDateFormat    = "%04d-%02d-%02d %02d:%02d:%02d"
 	LogPrefixDateFormatLen = 19
 	OffsetPrefixRegex      = `^(\d{4})(\d)*`
+	HexdumpsRegex          = `([0-9A-Fa-f]{2}\s{1,3}){1,16}`
 )
