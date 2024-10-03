@@ -61,7 +61,15 @@ func TestHexdumpReader(t *testing.T) {
 				return
 			}
 			if !bytes.Equal(decodedBytes, test.expected) {
-				t.Errorf("[%d] %s != [%d] %s", len(decodedBytes), hexdump.EncodeBytesToASCIIString(decodedBytes), len(test.expected), hexdump.EncodeBytesToASCIIString(test.expected))
+				t.Error(test.name)
+				t.Error("expectedBytes")
+				for _, b := range hexdump.EncodeBytesToOffsetHexdumpLines(test.expected) {
+					t.Error(b)
+				}
+				t.Error("decodedBytes")
+				for _, b := range hexdump.EncodeBytesToOffsetHexdumpLines(decodedBytes) {
+					t.Error(b)
+				}
 				return
 			}
 		})
