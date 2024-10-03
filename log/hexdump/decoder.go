@@ -22,6 +22,9 @@ import (
 	"github.com/cybergarage/go-logger/log/fmt"
 )
 
+var logPrefixReg = regexp.MustCompile(fmt.LogPrefixRegex)
+var offsetPrefixReg = regexp.MustCompile(OffsetPrefixRegex)
+
 // DecodeHexdumpLine returns the bytes of the specified string.
 func DecodeHexdumpLine(line string) ([]byte, error) {
 	if len(line) == 0 {
@@ -30,11 +33,9 @@ func DecodeHexdumpLine(line string) ([]byte, error) {
 
 	// Remove the offset part
 
-	wsIdx := strings.Index(line, " ")
-	if wsIdx == -1 {
-		return []byte{}, nil
+	if offsetPrefixReg.MatchString(line) {
+		line = offsetPrefixReg.ReplaceAllString(line, "")
 	}
-	line = line[wsIdx:]
 	line = strings.TrimSpace(line)
 
 	// Remove the ASCII part
@@ -78,7 +79,6 @@ func DecodeHexdumpLines(lines []string) ([]byte, error) {
 // DecodeHexdumpLogs decodes the specified hex log.
 func DecodeHexdumpLogs(logs []string) ([]byte, error) {
 	// Remove the log prefixes
-	logPrefixReg := regexp.MustCompile(fmt.LogPrefixRegex)
 	for n, log := range logs {
 		if !logPrefixReg.MatchString(log) {
 			continue
