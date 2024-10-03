@@ -23,7 +23,7 @@ func TestHexDecode(t *testing.T) {
 	src := []byte("abcdefghijklmnopqrstuvwxyz1234567890")
 	for i := 1; i < len(src); i++ {
 		srcBytes := []byte(strings.Trim(string(src[0:i]), " "))
-		encodedLines := EncodeBytesToStringLines(srcBytes)
+		encodedLines := EncodeBytesToOffsetHexdumpLines(srcBytes)
 		decodedBytes, err := DecodeHexdumpLines(encodedLines)
 		if err != nil {
 			t.Error(err)

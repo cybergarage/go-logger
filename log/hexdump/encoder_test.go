@@ -20,12 +20,12 @@ import (
 func TestASCIIEncode(t *testing.T) {
 	src := "\t\babcdefghijklmnopqrstuvwxyz"
 
-	hexStrs, strs := encodeBytesToHexDumpStringLines([]byte(src))
+	hexStrs, strs := encodeBytesToHexdumpLines([]byte(src))
 	if len(hexStrs) != len(strs) {
 		t.Errorf("%d != %d", len(hexStrs), len(strs))
 	}
 
-	lineStrs := EncodeBytesToStringLines([]byte(src))
+	lineStrs := EncodeBytesToOffsetHexdumpLines([]byte(src))
 	expectLen := (len(src) / hexdumpLineColums / 2) + 1
 	if len(lineStrs) != expectLen {
 		t.Errorf("%d != %d", len(lineStrs), expectLen)

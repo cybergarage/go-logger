@@ -53,7 +53,7 @@ func HexOutput(outputLevel Level, bytes []byte) int {
 	sharedLoggerMutex.Lock()
 	defer sharedLoggerMutex.Unlock()
 	nOutput := 0
-	lines := hexdump.EncodeBytesToStringLines(bytes)
+	lines := hexdump.EncodeBytesToOffsetHexdumpLines(bytes)
 	for _, line := range lines {
 		nOutput += output(outputLevel, line)
 	}
