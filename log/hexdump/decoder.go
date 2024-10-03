@@ -24,6 +24,7 @@ import (
 
 var logPrefixReg = regexp.MustCompile(fmt.LogPrefixRegex)
 var offsetPrefixReg = regexp.MustCompile(OffsetPrefixRegex)
+var hexdumpsReg = regexp.MustCompile(HexdumpsRegex)
 
 // DecodeHexdumpLine returns the bytes of the specified string.
 func DecodeHexdumpLine(line string) ([]byte, error) {
@@ -39,7 +40,14 @@ func DecodeHexdumpLine(line string) ([]byte, error) {
 	line = strings.TrimSpace(line)
 
 	// Remove the ASCII part
-	line = line[:hexdumpTwoLineColumnByteLen]
+
+	if !hexdumpsReg.MatchString(line) {
+		return []byte{}, nil
+	}
+	line = string(hexdumpsReg.Find([]byte(line)))
+	line = strings.TrimSpace(line)
+
+	// line = line[:hexdumpTwoLineColumnByteLen]
 
 	// Remove blank spaces
 	splitHexes := make([]string, 0)
