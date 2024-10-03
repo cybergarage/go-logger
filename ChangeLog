@@ -3,6 +3,10 @@
 	* Updated by golang.org/x/exp/slog
 	* Updated outputer to split by line fields
 
+2024-10-04 The go-logger Authors <skonno@cybergarage.org>
+	* v1.3.8
+	* Update hexdump functions using regexp package
+
 2024-10-01 The go-logger Authors <skonno@cybergarage.org>
 	* v1.3.7
 	* Update hexdump functions
