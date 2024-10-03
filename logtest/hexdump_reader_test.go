@@ -48,6 +48,11 @@ func TestHexdumpReader(t *testing.T) {
 			mysqldump001File,
 			mysqldump001Bytes,
 		},
+		{
+			"mysqldump002",
+			mysqldump002File,
+			mysqldump002Bytes,
+		},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			reader, err := hexdump.NewReaderFromHexdumpString(test.data)
