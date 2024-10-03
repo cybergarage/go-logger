@@ -40,7 +40,7 @@ func encodeBytesToHexDumpStringLines(src []byte) ([]string, []string) {
 	srcLen := len(src)
 
 	hexStrs := make([]string, 0)
-	strs := make([]string, 0)
+	ascStrs := make([]string, 0)
 
 	for offset := 0; offset < srcLen; offset += hexdumpLineColums {
 		lineLen := hexdumpLineColums
@@ -63,18 +63,18 @@ func encodeBytesToHexDumpStringLines(src []byte) ([]string, []string) {
 
 		// bytes -> ASCII strings
 
-		lineStr := ""
+		lineAscStr := ""
 		for n := 0; n < hexdumpLineColums; n++ {
 			if n < lineLen {
-				lineStr += EncodeByteToASCIIString(rune(src[offset+n]))
+				lineAscStr += EncodeByteToASCIIString(rune(src[offset+n]))
 				continue
 			}
-			lineStr += hexdumpLineSep
+			lineAscStr += hexdumpLineSep
 		}
 
-		strs = append(strs, lineStr)
+		ascStrs = append(ascStrs, lineAscStr)
 	}
-	return hexStrs, strs
+	return hexStrs, ascStrs
 }
 
 // EncodeBytesToStringLines returns the hexadecimal encoding strings of src with the ASCII repsentations.
