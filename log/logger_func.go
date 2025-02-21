@@ -56,14 +56,56 @@ func Fatalf(format string, args ...interface{}) int {
 	return output(LevelFatal, format, args...)
 }
 
-// Outputf outputs the specified level message to loggers.
+// Outputf outputs the specified level message to loggers
 func Outputf(outputLevel Level, format string, args ...interface{}) int {
 	sharedLoggerMutex.Lock()
 	defer sharedLoggerMutex.Unlock()
 	return output(outputLevel, format, args...)
 }
 
+// Debug outputs debug level message to loggers.
+func Debug(s string) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelDebug, "%s", s)
+}
+
+// Trace outputs trace level message to loggers.
+func Trace(s string) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelTrace, "%s", s)
+}
+
+// Info outputs a information level message to loggers.
+func Info(s string) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelInfo, "%s", s)
+}
+
+// Warn outputs a warning level message to loggers.
+func Warn(s string) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelWarn, "%s", s)
+}
+
 // Error outputs a error level message to loggers.
 func Error(err error) int {
 	return Errorf("%s", err.Error())
+}
+
+// Fatal outputs a fatal level message to loggers.
+func Fatal(s string) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(LevelFatal, "%s", s)
+}
+
+// Output outputs the specified level message to loggers.
+func Output(outputLevel Level, s string) int {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	return output(outputLevel, "%s", s)
 }
