@@ -55,7 +55,7 @@ func HexOutput(outputLevel Level, bytes []byte) int {
 	nOutput := 0
 	lines := hexdump.EncodeBytesToOffsetHexdumpLines(bytes)
 	for _, line := range lines {
-		nOutput += output(outputLevel, line)
+		nOutput += output(outputLevel, "%s", line)
 	}
 	return nOutput
 }

@@ -59,7 +59,7 @@ func (logger *Logger) IsLevel(logLevel Level) bool {
 	return logLevel >= logger.level
 }
 
-func output(outputLevel Level, msgFormat string, msgArgs ...interface{}) int {
+func output(outputLevel Level, msgFormat string, msgArgs ...any) int {
 	if sharedLogger == nil {
 		return 0
 	}
