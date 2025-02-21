@@ -43,6 +43,7 @@ BINARIES=\
 	${CMD_BINARIES}
 
 .PHONY: format vet lint clean
+.IGNORE: lint
 
 all: test
 
