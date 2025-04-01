@@ -22,8 +22,8 @@ import (
 type Level int
 
 const (
-	LevelDebug = Level(1 << 6)
-	LevelTrace = Level(1 << 5)
+	LevelTrace = Level(1 << 6)
+	LevelDebug = Level(1 << 5)
 	LevelInfo  = Level(1 << 4)
 	LevelWarn  = Level(1 << 3)
 	LevelError = Level(1 << 2)
