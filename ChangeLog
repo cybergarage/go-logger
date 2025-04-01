@@ -7,7 +7,8 @@
 
 2025-04-01
 	* v1.3.10
-	* Update log level constants
+	* Change log level to lowest TRACE
+	* Add SetStdoutTraceEnbled()
 
 2025-02-21
 	* v1.3.9
