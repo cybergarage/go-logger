@@ -56,7 +56,7 @@ func Fatalf(format string, args ...any) int {
 	return output(LevelFatal, format, args...)
 }
 
-// Outputf outputs the specified level message to loggers
+// Outputf outputs the specified level message to loggers.
 func Outputf(outputLevel Level, format string, args ...any) int {
 	sharedLoggerMutex.Lock()
 	defer sharedLoggerMutex.Unlock()
