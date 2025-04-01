@@ -5,6 +5,10 @@
 	* Updated by golang.org/x/exp/slog
 	* Updated outputer to split by line fields
 
+2025-04-01
+	* v1.3.10
+	* Update log level constants
+
 2025-02-21
 	* v1.3.9
 	* Added new logger functions with no arguments
