@@ -17,6 +17,15 @@ package log
 // SetStdoutDebugEnbled sets a trace stdout logger for debug.
 func SetStdoutDebugEnbled(flag bool) {
 	if flag {
+		SetSharedLogger(NewStdoutLogger(LevelDebug))
+	} else {
+		SetSharedLogger(nil)
+	}
+}
+
+// SetStdoutTraceEnbled sets a trace stdout logger for trace.
+func SetStdoutTraceEnbled(flag bool) {
+	if flag {
 		SetSharedLogger(NewStdoutLogger(LevelTrace))
 	} else {
 		SetSharedLogger(nil)
