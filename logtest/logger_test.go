@@ -94,14 +94,14 @@ func TestNullLogger(t *testing.T) {
 }
 
 func TestStdoutLogger(t *testing.T) {
-	log.SetSharedLogger(log.NewStdoutLogger(log.LevelDebug))
+	log.SetSharedLogger(log.NewStdoutLogger(log.LevelTrace))
 
-	nOutput := log.Debugf(testLogMessage)
+	nOutput := log.Tracef(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = log.Tracef(testLogMessage)
+	nOutput = log.Debugf(testLogMessage)
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
@@ -133,12 +133,12 @@ func TestStdoutLogger(t *testing.T) {
 
 	// Hex*()
 
-	nOutput = log.HexDebug([]byte(testLogMessage))
+	nOutput = log.HexTrace([]byte(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
 
-	nOutput = log.HexTrace([]byte(testLogMessage))
+	nOutput = log.HexDebug([]byte(testLogMessage))
 	if nOutput <= 0 {
 		t.Error(errors.New(outputErrorMessage))
 	}
