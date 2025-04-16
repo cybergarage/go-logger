@@ -37,7 +37,8 @@ CMD_ROOT=cmd
 CMD_PKG_ROOT=${MODULE_ROOT}/${CMD_ROOT}
 CMD_SRC_DIR=${CMD_ROOT}
 CMD_BINARIES=\
-	${CMD_PKG_ROOT}/hexdump2bin
+	${CMD_PKG_ROOT}/hexdump2bin \
+	${CMD_PKG_ROOT}/hexdump2ascii
 
 BINARIES=\
 	${CMD_BINARIES}
