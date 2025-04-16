@@ -5,6 +5,11 @@
 	* Updated by golang.org/x/exp/slog
 	* Updated outputer to split by line fields
 
+## 2025-04-XX
+	* v1.3.11
+	* Added hex dump utilities
+    	* hexdump2ascii 
+
 ## 2025-04-01
 	* v1.3.10
 	* Change log level to lowest TRACE
@@ -27,6 +32,7 @@
 	* Updated hexdump functions
 	* Added hexdump reader functions
 	* Added hex dump utilities
+    	* hexdump2bin
 
 ## 2024-01-24
 	* v1.3.5
