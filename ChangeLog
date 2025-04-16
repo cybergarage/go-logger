@@ -1,67 +1,67 @@
 # ChangeLog
 
-2023-xx-xx
+## 2025-xx-xx
 	* v1.4.0
 	* Updated by golang.org/x/exp/slog
 	* Updated outputer to split by line fields
 
-2025-04-01
+## 2025-04-01
 	* v1.3.10
 	* Change log level to lowest TRACE
 	* Add SetStdoutTraceEnbled()
 
-2025-02-21
+## 2025-02-21
 	* v1.3.9
 	* Added new logger functions with no arguments
 
-2024-10-04
+## 2024-10-04
 	* v1.3.8
 	* Update hexdump functions using regexp package
 
-2024-10-01
+## 2024-10-01
 	* v1.3.7
 	* Update hexdump functions
 
-2024-09-26
+## 2024-09-26
 	* v1.3.6
 	* Updated hexdump functions
 	* Added hexdump reader functions
 	* Added hex dump utilities
 
-2024-01-24
+## 2024-01-24
 	* v1.3.5
 	* Added new buffer logger
 	* Added decorder for hexdump log 
 
-2023-05-04
+## 2023-05-04
 	* v1.3.4
 	* Added GetLevelFromString()
 
-2023-03-28
+## 2023-03-28
 	* v1.3.3
 	* Updated log level constants
 
-2023-02-23
+## 2023-02-23
 	* v1.3.2
 	* Upgraded to go 1.20
 
-2022-10-10
+## 2022-10-10
 	* v1.3.1
 	* Updated outputter to use a mutex lock
 
-2022-09-05
+## 2022-09-05
 	* v1.3.0
 	* Renamed log.*() to log.*f()
 	* Added Error()
 
-2022-08-13
+## 2022-08-13
 	* v1.2.0
 	* Added Hex*() to dump binary protocol bytes
 
-2022-08-02
+## 2022-08-02
 	* v1.1.0
 	* Added Debug()
 
-2022-07-28
+## 2022-07-28
 	* v1.0.0
 	* The first release
