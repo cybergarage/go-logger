@@ -13,13 +13,13 @@
 // limitations under the License.
 
 /*
-hexdump2bin converts the specified ascii hexdump file to the binary file.
+hexdump2ascii converts the specified ascii hexdump file to the ascii file.
 
 	NAME
-	 hexdump2bin
+	 hexdump2ascii
 
 	SYNOPSIS
-	 hexdump2bin FILE
+	 hexdump2ascii FILE
 
 	RETURN VALUE
 	  Return EXIT_SUCCESS or EXIT_FAILURE
@@ -30,17 +30,18 @@ package main
 import (
 	"flag"
 	"os"
+	"unicode"
 
 	"github.com/cybergarage/go-logger/log/hexdump"
 )
 
 const (
-	ProgramName = "hexdump2bin"
+	ProgramName = "hexdump2ascii"
 )
 
 func usages() {
 	println("Usage:")
-	println("  " + ProgramName + " <HEX FILE> <BIN FILE>")
+	println("  " + ProgramName + " <HEX FILE> <OUTPUT FILE>")
 	println("")
 	println("Return Value:")
 	println("  Return EXIT_SUCCESS or EXIT_FAILURE")
@@ -63,11 +64,32 @@ func main() {
 		os.Exit(1)
 	}
 
-	binFileName := args[1]
-	err = os.WriteFile(binFileName, hexBytes, 0600)
+	asciiFileName := args[1]
+	file, err := os.OpenFile(asciiFileName, os.O_CREATE|os.O_WRONLY, 0600)
 	if err != nil {
 		println(err.Error())
 		os.Exit(1)
+	}
+
+	closeFile := func() {
+		if err := file.Close(); err != nil {
+			println(err.Error())
+			os.Exit(1)
+		}
+	}
+
+	defer closeFile()
+
+	for i := 0; i < len(hexBytes); i++ {
+		b := hexBytes[i]
+		if !unicode.IsPrint(rune(b)) && b != '\n' {
+			b = '.'
+		}
+		_, err := file.Write([]byte{b})
+		if err != nil {
+			println(err.Error())
+			os.Exit(1)
+		}
 	}
 
 	os.Exit(0)
