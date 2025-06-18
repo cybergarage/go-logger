@@ -14,8 +14,8 @@
 
 package log
 
-// SetStdoutDebugEnbled sets a trace stdout logger for debug.
-func SetStdoutDebugEnbled(flag bool) {
+// EnableStdoutDebug sets a trace stdout logger for debug.
+func EnableStdoutDebug(flag bool) {
 	if flag {
 		SetSharedLogger(NewStdoutLogger(LevelDebug))
 	} else {
@@ -23,8 +23,8 @@ func SetStdoutDebugEnbled(flag bool) {
 	}
 }
 
-// SetStdoutTraceEnbled sets a trace stdout logger for trace.
-func SetStdoutTraceEnbled(flag bool) {
+// EnableStdoutTrace sets a trace stdout logger for trace.
+func EnableStdoutTrace(flag bool) {
 	if flag {
 		SetSharedLogger(NewStdoutLogger(LevelTrace))
 	} else {
