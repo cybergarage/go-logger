@@ -51,7 +51,7 @@ func encodeBytesToHexdumpLines(src []byte) ([]string, []string) {
 		// bytes -> hex strings
 
 		lineHexStr := ""
-		for n := 0; n < hexdumpLineColums; n++ {
+		for n := range hexdumpLineColums {
 			if n < lineLen {
 				lineHexStr += fmt.Sprintf("%02X ", int(src[offset+n]))
 				continue
@@ -64,7 +64,7 @@ func encodeBytesToHexdumpLines(src []byte) ([]string, []string) {
 		// bytes -> ASCII strings
 
 		lineAscStr := ""
-		for n := 0; n < hexdumpLineColums; n++ {
+		for n := range hexdumpLineColums {
 			if n < lineLen {
 				lineAscStr += EncodeByteToASCIIString(rune(src[offset+n]))
 				continue

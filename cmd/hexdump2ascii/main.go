@@ -45,15 +45,21 @@ func usages() {
 	println("")
 	println("Return Value:")
 	println("  Return EXIT_SUCCESS or EXIT_FAILURE")
-	os.Exit(1)
 }
 
 func main() {
+	exitCode := 0
+	defer func() {
+		os.Exit(exitCode)
+	}()
+
 	flag.Parse()
 
 	args := flag.Args()
 	if len(args) < 2 {
 		usages()
+		exitCode = 1
+		return
 	}
 
 	hexFileName := args[0]
@@ -61,26 +67,27 @@ func main() {
 	hexBytes, err := hexdump.DecodeHexdumpFile(hexFileName)
 	if err != nil {
 		println(err.Error())
-		os.Exit(1)
+		exitCode = 1
+		return
 	}
 
 	asciiFileName := args[1]
 	file, err := os.OpenFile(asciiFileName, os.O_CREATE|os.O_WRONLY, 0600)
 	if err != nil {
 		println(err.Error())
-		os.Exit(1)
+		exitCode = 1
+		return
 	}
 
 	closeFile := func() {
 		if err := file.Close(); err != nil {
 			println(err.Error())
-			os.Exit(1)
+			exitCode = 1
 		}
 	}
-
 	defer closeFile()
 
-	for i := 0; i < len(hexBytes); i++ {
+	for i := range hexBytes {
 		b := hexBytes[i]
 		if !unicode.IsPrint(rune(b)) && b != '\n' {
 			b = '.'
@@ -88,9 +95,8 @@ func main() {
 		_, err := file.Write([]byte{b})
 		if err != nil {
 			println(err.Error())
-			os.Exit(1)
+			exitCode = 1
+			return
 		}
 	}
-
-	os.Exit(0)
 }
