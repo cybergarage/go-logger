@@ -17,17 +17,17 @@ package log
 // EnableStdoutDebug sets a trace stdout logger for debug.
 func EnableStdoutDebug(flag bool) {
 	if flag {
-		SetSharedLogger(NewStdoutLogger(LevelDebug))
+		SetDefault(NewStdoutLogger(LevelDebug))
 	} else {
-		SetSharedLogger(nil)
+		SetDefault(nil)
 	}
 }
 
 // EnableStdoutTrace sets a trace stdout logger for trace.
 func EnableStdoutTrace(flag bool) {
 	if flag {
-		SetSharedLogger(NewStdoutLogger(LevelTrace))
+		SetDefault(NewStdoutLogger(LevelTrace))
 	} else {
-		SetSharedLogger(nil)
+		SetDefault(nil)
 	}
 }

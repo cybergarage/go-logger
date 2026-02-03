@@ -34,14 +34,32 @@ type Logger struct {
 	data     any
 }
 
-// SetSharedLogger sets a singleton logger.
-func SetSharedLogger(logger *Logger) {
+// SetDefault sets the package-level default logger used by package-level output functions.
+func SetDefault(logger *Logger) {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
 	sharedLogger = logger
 }
 
-// GetSharedLogger gets a shared singleton logger.
-func GetSharedLogger() *Logger {
+// Default returns the current package-level default logger.
+func Default() *Logger {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
 	return sharedLogger
+}
+
+// SetSharedLogger sets a singleton logger.
+//
+// Deprecated: use SetDefault.
+func SetSharedLogger(logger *Logger) {
+	SetDefault(logger)
+}
+
+// GetSharedLogger gets a shared singleton logger.
+//
+// Deprecated: use Default.
+func GetSharedLogger() *Logger {
+	return Default()
 }
 
 // SetLevel sets a output log level.
