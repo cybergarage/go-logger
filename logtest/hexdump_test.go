@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 package logtest
 
 import (
@@ -27,7 +28,7 @@ func TestHexDecode(t *testing.T) {
 	msg := []byte("abcdefghijklmnopqrstuvwxyz1234567890")
 	for n := 1; n < len(msg); n++ {
 		buffer := bytes.NewBuffer(nil)
-		log.SetSharedLogger(log.NewBufferLogger(buffer, log.LevelInfo))
+		log.SetDefault(log.NewBufferLogger(buffer, log.LevelInfo))
 		msgBytes := msg[0:n]
 		log.HexInfo(msgBytes)
 

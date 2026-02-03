@@ -11,10 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 package hexdump
 
 import (
 	"fmt"
+	"strings"
 	"unicode"
 )
 
@@ -28,11 +30,11 @@ func EncodeByteToASCIIString(r rune) string {
 
 // EncodeBytesToASCIIString converts the specified bytes to ASCII strings.
 func EncodeBytesToASCIIString(bytes []byte) string {
-	str := ""
+	var str strings.Builder
 	for _, b := range bytes {
-		str += EncodeByteToASCIIString(rune(b))
+		str.WriteString(EncodeByteToASCIIString(rune(b)))
 	}
-	return str
+	return str.String()
 }
 
 // encodeBytesToHexdumpLines returns the hexadecimal encoding strings of src with the ASCII repsentations.
@@ -50,29 +52,29 @@ func encodeBytesToHexdumpLines(src []byte) ([]string, []string) {
 
 		// bytes -> hex strings
 
-		lineHexStr := ""
+		var lineHexStr strings.Builder
 		for n := range hexdumpLineColums {
 			if n < lineLen {
-				lineHexStr += fmt.Sprintf("%02X ", int(src[offset+n]))
+				lineHexStr.WriteString(fmt.Sprintf("%02X ", int(src[offset+n])))
 				continue
 			}
-			lineHexStr += hexdumpLineSep
+			lineHexStr.WriteString(hexdumpLineSep)
 		}
 
-		hexStrs = append(hexStrs, lineHexStr)
+		hexStrs = append(hexStrs, lineHexStr.String())
 
 		// bytes -> ASCII strings
 
-		lineAscStr := ""
+		var lineAscStr strings.Builder
 		for n := range hexdumpLineColums {
 			if n < lineLen {
-				lineAscStr += EncodeByteToASCIIString(rune(src[offset+n]))
+				lineAscStr.WriteString(EncodeByteToASCIIString(rune(src[offset+n])))
 				continue
 			}
-			lineAscStr += hexdumpLineSep
+			lineAscStr.WriteString(hexdumpLineSep)
 		}
 
-		ascStrs = append(ascStrs, lineAscStr)
+		ascStrs = append(ascStrs, lineAscStr.String())
 	}
 	return hexStrs, ascStrs
 }

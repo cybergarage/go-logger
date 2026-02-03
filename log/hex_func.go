@@ -18,37 +18,37 @@ import (
 	"github.com/cybergarage/go-logger/log/hexdump"
 )
 
-// Debug outputs a debug level message to loggers.
+// HexDebug outputs a debug level message to loggers.
 func HexDebug(bytes []byte) int {
 	return HexOutput(LevelDebug, bytes)
 }
 
-// Trace outputs trace level message to loggers.
+// HexTrace outputs a trace level message to loggers.
 func HexTrace(bytes []byte) int {
 	return HexOutput(LevelTrace, bytes)
 }
 
-// Info outputs a information level message to loggers.
+// HexInfo outputs an info level message to loggers.
 func HexInfo(bytes []byte) int {
 	return HexOutput(LevelInfo, bytes)
 }
 
-// Warn outputs a warning level message to loggers.
+// HexWarn outputs a warning level message to loggers.
 func HexWarn(bytes []byte) int {
 	return HexOutput(LevelWarn, bytes)
 }
 
-// Error outputs a error level message to loggers.
+// HexError outputs a error level message to loggers.
 func HexError(bytes []byte) int {
 	return HexOutput(LevelError, bytes)
 }
 
-// Fatal outputs a fatal level message to loggers.
+// HexFatal outputs a fatal level message to loggers.
 func HexFatal(bytes []byte) int {
 	return HexOutput(LevelFatal, bytes)
 }
 
-// Output outputs the specified level message to loggers.
+// HexOutput outputs the specified level message to loggers.
 func HexOutput(outputLevel Level, bytes []byte) int {
 	sharedLoggerMutex.Lock()
 	defer sharedLoggerMutex.Unlock()

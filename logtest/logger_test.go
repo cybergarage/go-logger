@@ -28,7 +28,7 @@ const (
 )
 
 func TestNullLogger(t *testing.T) {
-	log.SetSharedLogger(nil)
+	log.SetDefault(nil)
 
 	nOutput := log.Tracef(testLogMessage)
 	if 0 < nOutput {
@@ -94,7 +94,7 @@ func TestNullLogger(t *testing.T) {
 }
 
 func TestStdoutLogger(t *testing.T) {
-	log.SetSharedLogger(log.NewStdoutLogger(log.LevelTrace))
+	log.SetDefault(log.NewStdoutLogger(log.LevelTrace))
 
 	nOutput := log.Tracef(testLogMessage)
 	if nOutput <= 0 {

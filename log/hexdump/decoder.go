@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 package hexdump
 
 import (
@@ -51,7 +52,7 @@ func DecodeHexdumpLine(line string) ([]byte, error) {
 
 	// Remove blank spaces
 	splitHexes := make([]string, 0)
-	for _, s := range strings.Split(line, " ") {
+	for s := range strings.SplitSeq(line, " ") {
 		if len(s) == 0 {
 			continue
 		}
@@ -98,8 +99,9 @@ func DecodeHexdumpLogs(logs []string) ([]byte, error) {
 
 // DecodeHexdumpString decodes the specified hex log string.
 func DecodeHexdumpString(str string) ([]byte, error) {
-	lines := make([]string, 0)
-	lines = append(lines, strings.Split(str, "\n")...)
+	split := strings.Split(str, "\n")
+	lines := make([]string, 0, len(split))
+	lines = append(lines, split...)
 	return DecodeHexdumpLines(lines)
 }
 

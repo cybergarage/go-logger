@@ -96,7 +96,7 @@ func output(outputLevel Level, msgFormat string, msgArgs ...any) int {
 
 	outMsgLen := 0
 	if 0 < len(logMsg) {
-		for _, lineMsg := range strings.Split(logMsg, "\n") {
+		for lineMsg := range strings.SplitSeq(logMsg, "\n") {
 			lineMsg := std_fmt.Sprintf(fmt.LogPrefixFormat, logDate, GetLevelString(outputLevel), lineMsg)
 			n, _ := sharedLogger.outputer(sharedLogger, logLevel, lineMsg)
 			outMsgLen += n
