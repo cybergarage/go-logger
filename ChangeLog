@@ -4,9 +4,12 @@
 	* Updated by golang.org/x/exp/slog
 	* Updated outputer to split by line fields
 
-## v1.3.12 (2025-XX-XX)
-	* hexdump2ascii
-    	* fix gocritic warnings
+## v1.3.12 (2026-02-03)
+	* Added Go-style default logger accessors
+		* Default()
+		* SetDefault()
+		* Deprecated GetSharedLogger() and SetSharedLogger()
+	* Fixed lint warnings
 
 ## v1.3.11 (2025-06-18)
 	* Add logger helper functions
