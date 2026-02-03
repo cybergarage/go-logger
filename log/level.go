@@ -15,6 +15,7 @@
 package log
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -40,22 +41,40 @@ var logLevelStrings = map[Level]string{
 	LevelFatal: "FATAL",
 }
 
-// GetLevelString returns a string of the specified log level.
-func GetLevelString(logLevel Level) string {
-	logString, hasString := logLevelStrings[logLevel]
+// NewLevelFromString returns a log level of the specified string.
+func NewLevelFromString(logLevel string) (Level, error) {
+	uppderLogLevel := strings.ToUpper(logLevel)
+	for level, levelString := range logLevelStrings {
+		if strings.HasPrefix(uppderLogLevel, levelString) {
+			return level, nil
+		}
+	}
+	return LevelAll, fmt.Errorf("invalid log level string: %s", logLevel)
+}
+
+// String returns a string of the log level.
+func (level Level) String() string {
+	logString, hasString := logLevelStrings[level]
 	if !hasString {
 		return loggerLevelUnknownString
 	}
 	return logString
 }
 
+// GetLevelString returns a string of the specified log level.
+//
+// Deprecated: use Level.String().
+func GetLevelString(logLevel Level) string {
+	return logLevel.String()
+}
+
 // GetLevelFromString returns a log level of the specified string.
+//
+// Deprecated: use Level.String().
 func GetLevelFromString(logLevel string) Level {
-	uppderLogLevel := strings.ToUpper(logLevel)
-	for level, levelString := range logLevelStrings {
-		if strings.HasPrefix(uppderLogLevel, levelString) {
-			return level
-		}
+	level, err := NewLevelFromString(logLevel)
+	if err == nil {
+		return level
 	}
 	return LevelAll
 }
