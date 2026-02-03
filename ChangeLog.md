@@ -4,6 +4,10 @@
 	* Updated by golang.org/x/exp/slog
 	* Updated outputer to split by line fields
 
+## v1.3.13 (2026-02-XX)
+	* Add Level.String() as the canonical string form for log levels
+	* Introduce NewLevelFromString(string) (Level, error) for validated parsing
+
 ## v1.3.12 (2026-02-03)
 	* Added Go-style default logger accessors
 		* Default()
