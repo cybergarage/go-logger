@@ -19,12 +19,8 @@ import (
 )
 
 // NewStdoutLogger creates a stdout logger.
-func NewStdoutLogger(level Level) *Logger {
-	logger := &Logger{
-		level:    level,
-		outputer: outputStdout,
-		data:     nil}
-	return logger
+func NewStdoutLogger(level Level, opts ...Option) *Logger {
+	return newLogger(level, outputStdout, nil, opts...)
 }
 
 func outputStdout(_ *Logger, _ Level, msg string) (int, error) {

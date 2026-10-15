@@ -16,6 +16,7 @@ package log
 
 const (
 	logFilePerm              = 0644
+	openFileLoggerPerm       = 0600
 	LF                       = "\n"
 	loggerLevelUnknownString = "UNKNOWN"
 )
