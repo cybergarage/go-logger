@@ -18,6 +18,7 @@ import (
 	std_fmt "fmt"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/cybergarage/go-logger/log/fmt"
@@ -28,10 +29,29 @@ var sharedLoggerMutex = &sync.Mutex{}
 
 type LoggerOutpter func(logger *Logger, level Level, msg string) (int, error)
 
+// Logger writes the messages of the package-level output functions. Its
+// level can be changed while other goroutines log.
 type Logger struct {
-	level    Level
-	outputer LoggerOutpter
-	data     any
+	level      atomic.Int64
+	outputer   LoggerOutpter
+	data       any
+	timeLayout string
+	fileMode   uint32
+	closer     func() error
+}
+
+func newLogger(level Level, outputer LoggerOutpter, data any, opts ...Option) *Logger {
+	logger := &Logger{
+		outputer:   outputer,
+		data:       data,
+		timeLayout: TimeLayoutSeconds,
+		fileMode:   logFilePerm,
+	}
+	logger.level.Store(int64(level))
+	for _, opt := range opts {
+		opt(logger)
+	}
+	return logger
 }
 
 // SetDefault sets the package-level default logger used by package-level output functions.
@@ -62,19 +82,39 @@ func GetSharedLogger() *Logger {
 	return Default()
 }
 
-// SetLevel sets a output log level.
+// SetLevel sets a output log level. It may be called while other
+// goroutines log.
 func (logger *Logger) SetLevel(level Level) {
-	logger.level = level
+	logger.level.Store(int64(level))
 }
 
 // Level gets the current log level.
 func (logger *Logger) Level() Level {
-	return logger.level
+	return Level(logger.level.Load())
 }
 
 // IsLevel returns true when the specified log level is enable, otherwise false.
 func (logger *Logger) IsLevel(logLevel Level) bool {
-	return logLevel >= logger.level
+	return logLevel >= logger.Level()
+}
+
+// Close releases what the logger holds open, such as the file of
+// OpenFileLogger, after the message being written. The logger writes
+// nothing afterwards. It is a no-op for the other loggers.
+func (logger *Logger) Close() error {
+	sharedLoggerMutex.Lock()
+	defer sharedLoggerMutex.Unlock()
+	closer := logger.closer
+	logger.closer = nil
+	if closer == nil {
+		return nil
+	}
+	logger.outputer = outputNothing
+	return closer()
+}
+
+func outputNothing(_ *Logger, _ Level, _ string) (int, error) {
+	return 0, nil
 }
 
 func output(outputLevel Level, msgFormat string, msgArgs ...any) int {
@@ -87,10 +127,7 @@ func output(outputLevel Level, msgFormat string, msgArgs ...any) int {
 		return 0
 	}
 
-	t := time.Now()
-	logDate := std_fmt.Sprintf(fmt.LogPrefixDateFormat,
-		t.Year(), t.Month(), t.Day(),
-		t.Hour(), t.Minute(), t.Second())
+	logDate := time.Now().Format(sharedLogger.timeLayout)
 
 	logMsg := std_fmt.Sprintf(msgFormat, msgArgs...)
 

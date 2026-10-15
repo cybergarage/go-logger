@@ -19,12 +19,8 @@ import (
 )
 
 // NewBufferLogger creates a buffer logger.
-func NewBufferLogger(buffer *bytes.Buffer, level Level) *Logger {
-	logger := &Logger{
-		level:    level,
-		outputer: outputBuffer,
-		data:     buffer}
-	return logger
+func NewBufferLogger(buffer *bytes.Buffer, level Level, opts ...Option) *Logger {
+	return newLogger(level, outputBuffer, buffer, opts...)
 }
 
 func outputBuffer(logger *Logger, _ Level, msg string) (int, error) {
