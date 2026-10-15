@@ -1,74 +1,73 @@
 # ChangeLog
 
-## v1.4.0 (2026-10-XX)
-	* Add Level.String() as the canonical string form for log levels
-	* Introduce NewLevelFromString(string) (Level, error) for validated parsing
-	* Add NewWriterLogger() for any io.Writer
-	* Add OpenFileLogger(), which keeps its file open until Logger.Close() and creates it with mode 0600
-	* Add logger options to every constructor
-		* WithTimeLayout(), with TimeLayoutSeconds and TimeLayoutMilliseconds
-		* WithFileMode()
-	* Make Logger.SetLevel() and Logger.Level() safe to call while other goroutines log
-	* Accept fractional seconds in LogPrefixRegex, so that the hexdump decoder reads millisecond logs
-	* Rewrite README.md with an overview and usage
+## v1.4.0 (2026-10-15)
+- Add Level.String() as the canonical string form for log levels
+- Introduce NewLevelFromString(string) (Level, error) for validated parsing
+- Add NewWriterLogger() for any io.Writer
+- Add OpenFileLogger(), which keeps its file open until Logger.Close() and creates it with mode 0600
+- Add logger options to every constructor
+  - WithTimeLayout(), with TimeLayoutSeconds and TimeLayoutMilliseconds
+  - WithFileMode()
+- Make Logger.SetLevel() and Logger.Level() safe to call while other goroutines log
+- Accept fractional seconds in LogPrefixRegex, so that the hexdump decoder reads millisecond logs
 
 ## v1.3.12 (2026-02-03)
-	* Added Go-style default logger accessors
-		* Default()
-		* SetDefault()
-		* Deprecated GetSharedLogger() and SetSharedLogger()
-	* Fixed lint warnings
+- Added Go-style default logger accessors
+  - Default()
+  - SetDefault()
+  - Deprecated GetSharedLogger() and SetSharedLogger()
+- Fixed lint warnings
 
 ## v1.3.11 (2025-06-18)
-	* Add logger helper functions
-		* EnableStdoutDebug()
-		* EnableStdoutTrace()
-	* Added hex dump utilities
-	    * hexdump2ascii 
+- Add logger helper functions
+  - EnableStdoutDebug()
+  - EnableStdoutTrace()
+- Added hex dump utilities
+  - hexdump2ascii 
 
 ## v1.3.10 (2025-04-01)
-	* Change log level to lowest TRACE
+- Change log level to lowest TRACE
 
 ## v1.3.9 (2025-02-21)
-	* Added new logger functions with no arguments
+- Added new logger functions with no arguments
 
 ## v1.3.8 (2024-10-04)
-	* Update hexdump functions using regexp package
+- Update hexdump functions using regexp package
 
 ## v1.3.7 (2024-10-01)
-	* Update hexdump functions
+- Update hexdump functions
 
 ## v1.3.6 (2024-09-26)
-	* Updated hexdump functions
-	* Added hexdump reader functions
-	* Added hex dump utilities
-    	* hexdump2bin
+- Updated hexdump functions
+- Added hexdump reader functions
+- Added hex dump utilities
+  - hexdump2bin
 
 ## v1.3.5 (2024-01-24)
-	* Added new buffer logger
-	* Added decorder for hexdump log 
+- Added new buffer logger
+- Added decorder for hexdump log 
 
 ## v1.3.4 (2023-05-04)
-	* Added GetLevelFromString()
+- Added GetLevelFromString()
 
 ## v1.3.3 (2023-03-28)
-	* Updated log level constants
+- Updated log level constants
 
 ## v1.3.2 (2023-02-23)
-	* Upgraded to go 1.20
+- Upgraded to go 1.20
 
 ## v1.3.1 (2022-10-10)
-	* Updated outputter to use a mutex lock
+- Updated outputter to use a mutex lock
 
 ## v1.3.0 (2022-09-05)
-	* Renamed log.*() to log.*f()
-	* Added Error()
+- Renamed log.*() to log.*f()
+- Added Error()
 
 ## v1.2.0 (2022-08-13)
-	* Added Hex*() to dump binary protocol bytes
+- Added Hex*() to dump binary protocol bytes
 
 ## v1.1.0 (2022-08-02)
-	* Added Debug()
+- Added Debug()
 
 ## v1.0.0 (2022-07-28)
-	* The first release
+- The first release
