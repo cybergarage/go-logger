@@ -1,10 +1,6 @@
 # ChangeLog
 
-## v1.4.0 (2025-xx-xx)
-	* Updated by golang.org/x/exp/slog
-	* Updated outputer to split by line fields
-
-## v1.3.13 (2026-10-XX)
+## v1.4.0 (2026-10-XX)
 	* Add Level.String() as the canonical string form for log levels
 	* Introduce NewLevelFromString(string) (Level, error) for validated parsing
 	* Add NewWriterLogger() for any io.Writer
@@ -14,6 +10,7 @@
 		* WithFileMode()
 	* Make Logger.SetLevel() and Logger.Level() safe to call while other goroutines log
 	* Accept fractional seconds in LogPrefixRegex, so that the hexdump decoder reads millisecond logs
+	* Rewrite README.md with an overview and usage
 
 ## v1.3.12 (2026-02-03)
 	* Added Go-style default logger accessors
